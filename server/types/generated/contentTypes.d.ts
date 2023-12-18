@@ -362,6 +362,66 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
+  collectionName: 'announcements';
+  info: {
+    singularName: 'announcement';
+    pluralName: 'announcements';
+    displayName: 'Announcement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    test: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::announcement.announcement',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::announcement.announcement',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEntryEntry extends Schema.CollectionType {
+  collectionName: 'entries';
+  info: {
+    singularName: 'entry';
+    pluralName: 'entries';
+    displayName: 'Entry';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    test: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::entry.entry',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::entry.entry',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -687,6 +747,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::announcement.announcement': ApiAnnouncementAnnouncement;
+      'api::entry.entry': ApiEntryEntry;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
