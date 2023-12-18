@@ -4,15 +4,38 @@
   "info": {
     "singularName": "entry",
     "pluralName": "entries",
-    "displayName": "Entry"
+    "displayName": "Entry",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "test": {
-      "type": "string"
+    "score": {
+      "type": "string",
+      "required": true
+    },
+    "ack_datetime": {
+      "type": "datetime"
+    },
+    "announcement": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::announcement.announcement",
+      "inversedBy": "entries"
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "entries"
+    },
+    "xxxes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::xxx.xxx",
+      "mappedBy": "entries"
     }
   }
 }

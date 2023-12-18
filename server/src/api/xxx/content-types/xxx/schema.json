@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "xxxes",
+  "info": {
+    "singularName": "xxx",
+    "pluralName": "xxxes",
+    "displayName": "xxx",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "entries": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::entry.entry",
+      "inversedBy": "xxxes"
+    },
+    "test": {
+      "type": "string"
+    }
+  }
+}

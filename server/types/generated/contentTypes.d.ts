@@ -368,12 +368,25 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
     singularName: 'announcement';
     pluralName: 'announcements';
     displayName: 'Announcement';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    test: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+    publish_datetime: Attribute.DateTime & Attribute.Required;
+    entries: Attribute.Relation<
+      'api::announcement.announcement',
+      'oneToMany',
+      'api::entry.entry'
+    >;
+    description: Attribute.Text;
+    announcer: Attribute.Relation<
+      'api::announcement.announcement',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -398,12 +411,25 @@ export interface ApiEntryEntry extends Schema.CollectionType {
     singularName: 'entry';
     pluralName: 'entries';
     displayName: 'Entry';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    test: Attribute.String;
+    score: Attribute.String & Attribute.Required;
+    ack_datetime: Attribute.DateTime;
+    announcement: Attribute.Relation<
+      'api::entry.entry',
+      'manyToOne',
+      'api::announcement.announcement'
+    >;
+    owner: Attribute.Relation<
+      'api::entry.entry',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    xxxes: Attribute.Relation<'api::entry.entry', 'manyToMany', 'api::xxx.xxx'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -418,6 +444,34 @@ export interface ApiEntryEntry extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiXxxXxx extends Schema.CollectionType {
+  collectionName: 'xxxes';
+  info: {
+    singularName: 'xxx';
+    pluralName: 'xxxes';
+    displayName: 'xxx';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    entries: Attribute.Relation<
+      'api::xxx.xxx',
+      'manyToMany',
+      'api::entry.entry'
+    >;
+    test: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::xxx.xxx', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::xxx.xxx', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -676,6 +730,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    entries: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::entry.entry'
+    >;
+    announcements: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::announcement.announcement'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -749,6 +813,7 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::announcement.announcement': ApiAnnouncementAnnouncement;
       'api::entry.entry': ApiEntryEntry;
+      'api::xxx.xxx': ApiXxxXxx;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
