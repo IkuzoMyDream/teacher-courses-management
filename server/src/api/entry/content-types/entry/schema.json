@@ -30,12 +30,6 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "entries"
-    },
-    "xxxes": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::xxx.xxx",
-      "mappedBy": "entries"
     }
   }
 }
