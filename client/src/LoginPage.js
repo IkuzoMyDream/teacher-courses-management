@@ -3,11 +3,13 @@ import { Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import axios from "axios";
 import axiosConfig from "./axios-interceptor";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [submitEnabled, setSubmitEnabled] = useState(true);
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -27,13 +29,16 @@ export default function LoginPage() {
         password: password,
       });
       axiosConfig.jwt = result.data.jwt;
-      result = await axios.get("http://localhost:1337/api/users/me?populate=role");
+      result = await axios.get(
+        "http://localhost:1337/api/users/me?populate=role"
+      );
 
       if (result.data.role) {
         if (result.data.role.name === "Student") {
-          console.log("Student");
+          
+          navigate("/student");
         } else if (result.data.role.name == "Staff") {
-          console.log("Staff");
+          navigate("/staff")
         }
       }
     } catch (e) {
