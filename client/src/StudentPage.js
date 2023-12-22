@@ -13,7 +13,14 @@ function StudentPage() {
   const [annmData, setAnnmData] = useState([]);
   const [jwt, setJwt] = useLocalState("", "jwt");
 
+  useEffect(() => {
+    fetchItems();
+  }, [jwt]);
+
   const fetchItems = async () => {
+    axios.defaults.headers.common = {
+      Authorization: `Bearer ${jwt}`,
+    };
     try {
       const response = await axios.get(URL_ANNMENTS + "?populate=*");
       console.log(response);
@@ -37,9 +44,9 @@ function StudentPage() {
     }
   };
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
+  // useEffect(() => {
+  //   fetchItems();
+  // }, []);
 
   return <AnnouncementsList data={annmData}></AnnouncementsList>;
 }

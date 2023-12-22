@@ -24,6 +24,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (jwt) {
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${jwt}`,
+      };
       navigate("/student");
     }
   }, [jwt]);
