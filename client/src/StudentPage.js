@@ -46,6 +46,10 @@ function StudentPage() {
   const handleLogout = (e) => {
     e.preventDefault();
     window.localStorage.removeItem("jwt");
+
+    axios.defaults.headers.common = {
+      Authorization: ``,
+    };
     setJwt("");
     navigate("/");
   };
