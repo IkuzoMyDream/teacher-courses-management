@@ -45,6 +45,7 @@ function StudentPage() {
 
   const handleLogout = (e) => {
     e.preventDefault();
+    window.localStorage.removeItem("jwt");
     setJwt("");
     navigate("/");
   };
