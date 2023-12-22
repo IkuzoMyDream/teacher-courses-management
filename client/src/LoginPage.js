@@ -28,7 +28,9 @@ export default function LoginPage() {
         identifier: username,
         password: password,
       });
-      axiosConfig.jwt = result.data.jwt;
+      console.log(result.data.jwt)
+      // axiosConfig.jwt = result.data.jwt;
+      axios.defaults.headers.common = {Authorization: `Bearer ${result.data.jwt}`}
       result = await axios.get(
         "http://localhost:1337/api/users/me?populate=role"
       );

@@ -387,6 +387,11 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    course: Attribute.Relation<
+      'api::announcement.announcement',
+      'manyToOne',
+      'api::course.course'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -398,6 +403,52 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::announcement.announcement',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCourseCourse extends Schema.CollectionType {
+  collectionName: 'courses';
+  info: {
+    singularName: 'course';
+    pluralName: 'courses';
+    displayName: 'Course';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course_name: Attribute.String & Attribute.Required;
+    course_enrollers: Attribute.Relation<
+      'api::course.course',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    announcements: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::announcement.announcement'
+    >;
+    entries: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::entry.entry'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::course.course',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::course.course',
       'oneToOne',
       'admin::user'
     > &
@@ -428,6 +479,11 @@ export interface ApiEntryEntry extends Schema.CollectionType {
       'api::entry.entry',
       'manyToOne',
       'plugin::users-permissions.user'
+    >;
+    course: Attribute.Relation<
+      'api::entry.entry',
+      'manyToOne',
+      'api::course.course'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -711,6 +767,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::announcement.announcement'
     >;
+    courses: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::course.course'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -783,6 +844,7 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::announcement.announcement': ApiAnnouncementAnnouncement;
+      'api::course.course': ApiCourseCourse;
       'api::entry.entry': ApiEntryEntry;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
