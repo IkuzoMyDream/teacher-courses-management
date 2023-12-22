@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import AnnouncementsList from "./components/AnnouncementsList";
 import axiosConfig from "./axios-interceptor";
 import useLocalState from "./useLocalStorage";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -12,10 +14,7 @@ const URL_ANNMENTS = "/api/announcements";
 function StudentPage() {
   const [annmData, setAnnmData] = useState([]);
   const [jwt, setJwt] = useLocalState("", "jwt");
-
-  useEffect(() => {
-    fetchItems();
-  }, [jwt]);
+  const navigate = useNavigate();
 
   const fetchItems = async () => {
     axios.defaults.headers.common = {
@@ -44,11 +43,22 @@ function StudentPage() {
     }
   };
 
-  // useEffect(() => {
-  //   fetchItems();
-  // }, []);
+  const handleLogout = (e) => {
+    e.preventDefault();
+    setJwt("");
+    navigate("/");
+  };
 
-  return <AnnouncementsList data={annmData}></AnnouncementsList>;
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  return (
+    <div>
+      <AnnouncementsList data={annmData}></AnnouncementsList>
+      <Button onClick={handleLogout}>Logout </Button>
+    </div>
+  );
 }
 
 export default StudentPage;

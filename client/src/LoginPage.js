@@ -32,7 +32,7 @@ export default function LoginPage() {
   }, [jwt]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    
     setSubmitEnabled(false);
 
     try {
