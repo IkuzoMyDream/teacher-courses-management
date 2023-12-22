@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import AnnouncementsList from "./components/AnnouncementsList";
 import axiosConfig from "./axios-interceptor";
+import useLocalState from "./useLocalStorage";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -10,11 +11,12 @@ const URL_ANNMENTS = "/api/announcements";
 
 function StudentPage() {
   const [annmData, setAnnmData] = useState([]);
+  const [jwt, setJwt] = useLocalState("", "jwt");
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get(URL_ANNMENTS+"?populate=*");
-      console.log(response)
+      const response = await axios.get(URL_ANNMENTS + "?populate=*");
+      console.log(response);
       setAnnmData(
         response.data.data.map((d) => {
           return {
@@ -23,7 +25,7 @@ function StudentPage() {
             title: d.attributes.title,
             description: d.attributes.description,
             publish_datetime: d.attributes.publish_datetime,
-            course: d.attributes.course
+            course: d.attributes.course,
             // ...d.attributes,
           };
         })
@@ -39,9 +41,7 @@ function StudentPage() {
     fetchItems();
   }, []);
 
-  return (
-      <AnnouncementsList data={annmData}></AnnouncementsList>
-  );
+  return <AnnouncementsList data={annmData}></AnnouncementsList>;
 }
 
 export default StudentPage;

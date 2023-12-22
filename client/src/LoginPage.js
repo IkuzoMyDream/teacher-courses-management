@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useLocalState from "./useLocalStorage";
 import { Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import axios from "axios";
@@ -9,6 +10,8 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [submitEnabled, setSubmitEnabled] = useState(true);
+  const [jwt, setJwt] = useLocalState("", "jwt");
+
   const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
@@ -19,6 +22,12 @@ export default function LoginPage() {
     setPassword(e.target.value);
   };
 
+  useEffect(() => {
+    if (jwt) {
+      navigate("/student");
+    }
+  }, [jwt]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitEnabled(false);
@@ -28,19 +37,20 @@ export default function LoginPage() {
         identifier: username,
         password: password,
       });
-      console.log(result.data.jwt)
-      // axiosConfig.jwt = result.data.jwt;
-      axios.defaults.headers.common = {Authorization: `Bearer ${result.data.jwt}`}
+      setJwt(result.data.jwt);
+      console.log(result.data.jwt);
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${result.data.jwt}`,
+      };
       result = await axios.get(
         "http://localhost:1337/api/users/me?populate=role"
       );
 
       if (result.data.role) {
         if (result.data.role.name === "Student") {
-          
           navigate("/student");
-        } else if (result.data.role.name == "Staff") {
-          navigate("/staff")
+        } else if (result.data.role.name === "Staff") {
+          navigate("/staff");
         }
       }
     } catch (e) {
