@@ -2,16 +2,18 @@ import { Table } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 
 export default function AnnouncementsList(props) {
-  console.log(props)
+  console.log(props);
   if (props.data) {
     return (
       <div>
-        <Table bordered hover size="lg" responsive="xl">
+        <Table hover>
           <tbody>
             {props.data.map((d) => (
-              <tr key={d.id}>
-                <td>{d.course_name}</td>
-                <td>{d.announcement.publish_datetime}</td>
+              <tr>
+                <Card key={d.id} className="mb-3" borderless>
+                  <Card.Header>{d.course_name}</Card.Header>
+                  <Card.Body>{d.announcement.publish_datetime}</Card.Body>
+                </Card>
               </tr>
             ))}
           </tbody>

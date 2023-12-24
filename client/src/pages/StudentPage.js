@@ -48,7 +48,6 @@ function StudentPage() {
   }, []);
 
   useEffect(() => {
-    // console.log(myCourse);
   }, [myCourse]);
 
   return (
