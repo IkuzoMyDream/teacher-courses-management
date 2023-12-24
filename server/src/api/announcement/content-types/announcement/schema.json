@@ -30,9 +30,9 @@
     },
     "course": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::course.course",
-      "inversedBy": "announcements"
+      "mappedBy": "announcement"
     }
   }
 }

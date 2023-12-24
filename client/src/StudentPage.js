@@ -9,29 +9,17 @@ import { useNavigate } from "react-router-dom";
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
-const URL_ANNMENTS = "/api/announcements";
+const URL_MY_COURSE = "/api/users/me?populate[courses][populate]=announcement";
 
 function StudentPage() {
-  const [annmData, setAnnmData] = useState([]);
+  const [myCourse, setMyCourse] = useState([]);
   const [jwt, setJwt] = useLocalState("", "jwt");
   const navigate = useNavigate();
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get(URL_ANNMENTS + "?populate=*");
-      console.log(response);
-      setAnnmData(
-        response.data.data.map((d) => {
-          return {
-            id: d.id,
-            key: d.id,
-            publish_datetime: d.attributes.publish_datetime,
-            ...d.attributes.course.data.attributes,
-            ...d.attributes.entries.data.attributes,
-            ...d.attributes.announcer.data,
-          };
-        })
-      );
+      const response = await axios.get(URL_MY_COURSE);
+      setMyCourse(response.data.courses);
     } catch (err) {
       console.log(err);
       window.localStorage.removeItem("jwt");
@@ -40,7 +28,6 @@ function StudentPage() {
       };
       navigate("/");
     } finally {
-      console.log(annmData);
     }
   };
 
@@ -61,9 +48,13 @@ function StudentPage() {
     fetchItems();
   }, []);
 
+  useEffect(() => {
+    // console.log(myCourse);
+  }, [myCourse]);
+
   return (
     <div className="container">
-      <AnnouncementsList data={annmData}></AnnouncementsList>
+      <AnnouncementsList data={myCourse}></AnnouncementsList>
       <Button onClick={handleLogout}>Logout </Button>
     </div>
   );

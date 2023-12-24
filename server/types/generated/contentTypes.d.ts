@@ -387,7 +387,7 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
     >;
     course: Attribute.Relation<
       'api::announcement.announcement',
-      'manyToOne',
+      'oneToOne',
       'api::course.course'
     >;
     createdAt: Attribute.DateTime;
@@ -426,9 +426,9 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'manyToMany',
       'plugin::users-permissions.user'
     >;
-    announcements: Attribute.Relation<
+    announcement: Attribute.Relation<
       'api::course.course',
-      'oneToMany',
+      'oneToOne',
       'api::announcement.announcement'
     >;
     entries: Attribute.Relation<
