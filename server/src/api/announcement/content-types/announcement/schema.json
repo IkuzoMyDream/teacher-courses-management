@@ -12,10 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string",
-      "required": true
-    },
     "publish_datetime": {
       "type": "datetime",
       "required": true
@@ -25,9 +21,6 @@
       "relation": "oneToMany",
       "target": "api::entry.entry",
       "mappedBy": "announcement"
-    },
-    "description": {
-      "type": "text"
     },
     "announcer": {
       "type": "relation",

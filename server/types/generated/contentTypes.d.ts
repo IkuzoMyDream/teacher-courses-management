@@ -374,14 +374,12 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String & Attribute.Required;
     publish_datetime: Attribute.DateTime & Attribute.Required;
     entries: Attribute.Relation<
       'api::announcement.announcement',
       'oneToMany',
       'api::entry.entry'
     >;
-    description: Attribute.Text;
     announcer: Attribute.Relation<
       'api::announcement.announcement',
       'manyToOne',

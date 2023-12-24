@@ -17,9 +17,6 @@ function StudentPage() {
   const navigate = useNavigate();
 
   const fetchItems = async () => {
-    axios.defaults.headers.common = {
-      Authorization: `Bearer ${jwt}`,
-    };
     try {
       const response = await axios.get(URL_ANNMENTS + "?populate=*");
       console.log(response);
@@ -28,38 +25,44 @@ function StudentPage() {
           return {
             id: d.id,
             key: d.id,
-            title: d.attributes.title,
-            description: d.attributes.description,
             publish_datetime: d.attributes.publish_datetime,
-            course: d.attributes.course,
-            // ...d.attributes,
+            ...d.attributes.course.data.attributes,
+            ...d.attributes.entries.data.attributes,
+            ...d.attributes.announcer.data,
           };
         })
       );
     } catch (err) {
       console.log(err);
+      window.localStorage.removeItem("jwt");
+      axios.defaults.headers.common = {
+        Authorization: ``,
+      };
+      navigate("/");
     } finally {
-      // console.log(annmData);
+      console.log(annmData);
     }
   };
 
   const handleLogout = (e) => {
     e.preventDefault();
     window.localStorage.removeItem("jwt");
-
     axios.defaults.headers.common = {
       Authorization: ``,
     };
-    setJwt("");
+    setJwt("a");
     navigate("/");
   };
 
   useEffect(() => {
+    axios.defaults.headers.common = {
+      Authorization: `Bearer ${jwt}`,
+    };
     fetchItems();
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <AnnouncementsList data={annmData}></AnnouncementsList>
       <Button onClick={handleLogout}>Logout </Button>
     </div>
