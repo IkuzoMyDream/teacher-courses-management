@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import AnnouncementsList from "./components/AnnouncementsList";
-import axiosConfig from "./axios-interceptor";
-import useLocalState from "./useLocalStorage";
+import AnnouncementsList from "../components/AnnouncementsList";
+import useLocalState from "../useLocalStorage";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 

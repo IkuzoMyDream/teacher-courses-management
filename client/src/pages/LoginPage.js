@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import useLocalState from "./useLocalStorage";
+import useLocalState from "../useLocalStorage";
 import { Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import axios from "axios";
-import axiosConfig from "./axios-interceptor";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
@@ -44,7 +43,7 @@ export default function LoginPage() {
       console.log(result.data.jwt);
       axios.defaults.headers.common = {
         Authorization: `Bearer ${result.data.jwt}`,
-      };
+      };  
       result = await axios.get(
         "http://localhost:1337/api/users/me?populate=role"
       );
@@ -81,9 +80,7 @@ export default function LoginPage() {
           onChange={handlePasswordChange}
         />
       </Form.Group>
-      {/* <Form.Group className="mb-3" controlId="">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group> */}
+
       <Button variant="primary" type="submit" disabled={!submitEnabled}>
         Submit
       </Button>
