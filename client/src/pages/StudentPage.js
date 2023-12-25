@@ -47,8 +47,7 @@ function StudentPage() {
     fetchItems();
   }, []);
 
-  useEffect(() => {
-  }, [myCourse]);
+  useEffect(() => {}, [myCourse]);
 
   return (
     <div className="container">

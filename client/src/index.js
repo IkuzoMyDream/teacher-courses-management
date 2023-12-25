@@ -7,19 +7,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import StudentPage from "./pages/StudentPage";
 import StaffPage from "./pages/StaffPage";
+import EntryPage from "./pages/EntryPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
   },
   {
-    path: "/student",
+    path: "/student/announcements",
     element: <StudentPage />,
   },
   {
+    path: "/student/announcements/:announcementId",
+    element: <EntryPage />,
+  },
+  {
     path: "/staff",
-    element: <StaffPage/>,
+    element: <StaffPage />,
   },
 ]);
 
