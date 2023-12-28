@@ -30,6 +30,9 @@ function EntryPage() {
 
   const ackCheck = async () => {
     try {
+      
+      // error is that unknow id on request lol, it'll be fixed later Zz
+      console.log(announcement)
       let response = await axios.put(
         `/api/entries/${announcement.entry.id}/ackCheck`
       );
