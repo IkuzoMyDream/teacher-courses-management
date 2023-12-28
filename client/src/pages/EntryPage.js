@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Button, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 function EntryPage() {
@@ -26,18 +27,45 @@ function EntryPage() {
       // console.log(announcement);
     }
   };
+
+  const ackCheck = async () => {
+    try {
+      let response = await axios.put(
+        `/api/entries/${announcement.entry.id}/ackCheck`
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("yeah");
+    }
+  };
+
   useEffect(() => {
     fetchItem();
   }, []);
   useEffect(() => {
-    console.log(announcement.course);
+    console.log(announcement);
   }, [announcement]);
 
   if (announcement.course) {
     return (
       <div>
-        <h1>{announcement.course.course_name}</h1>
-        <h2>{announcement.entry.score}</h2>
+        <Table>
+          <tbody>
+            <tr>
+              <td>{announcement.course.course_name}</td>
+              <td>{announcement.entry.score}</td>
+              {!announcement.entry.ack_datetime ? (
+                <td>
+                  <Button onClick={() => ackCheck()}>ack</Button>
+                </td>
+              ) : (
+                <td>{announcement.entry.ack_datetime}</td>
+              )}
+            </tr>
+          </tbody>
+        </Table>
       </div>
     );
   } else {

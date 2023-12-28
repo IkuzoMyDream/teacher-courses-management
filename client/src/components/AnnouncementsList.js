@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function AnnouncementsList(props) {
-  // console.log(props);
+  // console.log(props);  
 
   const [hoveredCard, setHoveredCard] = useState(null);
 
@@ -35,5 +35,5 @@ export default function AnnouncementsList(props) {
     );
   }
 
-  return null; // Handle the case where props.data is not available
+  return null; 
 }
