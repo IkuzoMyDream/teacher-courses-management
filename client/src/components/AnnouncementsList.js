@@ -17,12 +17,12 @@ export default function AnnouncementsList(props) {
           >
             <Card
               key={d.id}
-              className={`mb-3 ${hoveredCard === d.announcement.id ? "custom-hover" : ""}`}
+              className={`mb-3 ${hoveredCard === d.id ? "custom-hover" : ""}`}
               onMouseOver={() => setHoveredCard(d.id)}
               onMouseOut={() => setHoveredCard(null)}
               style={{
                 transition: "background-color 0.3s",
-                backgroundColor: hoveredCard === d.announcement.id ? "#596FB7" : "inherit",
+                backgroundColor: hoveredCard === d.id ? "#596FB7" : "inherit",
                 cursor: "pointer",
               }}
             >

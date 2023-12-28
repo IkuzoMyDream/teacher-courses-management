@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import AnnouncementsList from "../components/AnnouncementsList";
 import useLocalState from "../useLocalStorage";
-import { Button } from "react-bootstrap";
+import { Button, Container, Nav, Navbar, Image, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL =
@@ -50,9 +50,24 @@ function StudentPage() {
   useEffect(() => {}, [myCourse]);
 
   return (
-    <div className="container">
+    <div >
+      <Navbar style={{ backgroundColor: "#C3E2C2" }}>
+        <Container>
+          <Navbar.Brand>
+            <Image
+              src="/PSU-Logo-01.png"
+              alt="PSU Logo"
+              fluid
+              style={{ maxWidth: "100px" }}
+            />
+          </Navbar.Brand>
+          <Navbar.Collapse>ระบบประกาศคะแนนนักศึกษา</Navbar.Collapse>
+          <Button onClick={handleLogout} variant="outline-danger">
+            Logout
+          </Button>
+        </Container>
+      </Navbar>
       <AnnouncementsList data={myCourse}></AnnouncementsList>
-      <Button onClick={handleLogout}>Logout </Button>
     </div>
   );
 }
