@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
+axios.defaults.baseURL =
+  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
+
 function EntryPage() {
   const { announcementId } = useParams();
   const [announcement, setAnnouncement] = useState({});
@@ -13,7 +16,12 @@ function EntryPage() {
         `/api/announcements?filters[id][$eq]=${announcementId}&populate=*`
       );
 
+      console.log(response);
+
       response = response.data.data[0].attributes;
+
+      // error in this part, should take id in setAnnouncement
+
 
       // console.log(response.course.data.attributes.course_name);
       setAnnouncement({
@@ -30,9 +38,8 @@ function EntryPage() {
 
   const ackCheck = async () => {
     try {
-      
       // error is that unknow id on request lol, it'll be fixed later Zz
-      console.log(announcement)
+      console.log(announcement);
       let response = await axios.put(
         `/api/entries/${announcement.entry.id}/ackCheck`
       );
@@ -61,7 +68,7 @@ function EntryPage() {
               <td>{announcement.entry.score}</td>
               {!announcement.entry.ack_datetime ? (
                 <td>
-                  <Button onClick={() => ackCheck()}>ack</Button>
+                  <Button onClick={ackCheck}>ack</Button>
                 </td>
               ) : (
                 <td>{announcement.entry.ack_datetime}</td>
