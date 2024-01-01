@@ -9,10 +9,14 @@ import { Spin } from "antd";
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
-const URL_MY_COURSE = "/api/users/me?populate[courses][populate]=announcement";
+//localhost:1337/api/users/me?populate[courses][populate][announcement][populate]=*&populate[entries][populate]=course
+
+const URL_MY_COURSE =
+  "/api/users/me?populate[courses][populate][announcement][populate]=*&populate[entries][populate]=course";
 
 function StudentPage() {
-  const [myCourse, setMyCourse] = useState([]);
+  const [myCourses, setMyCourses] = useState([]);
+  const [myEntries, setMyEntries] = useState([]);
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -20,7 +24,9 @@ function StudentPage() {
   const fetchItems = async () => {
     try {
       const response = await axios.get(URL_MY_COURSE);
-      setMyCourse(response.data.courses);
+      console.log(response);
+      setMyCourses(response.data.courses);
+      setMyEntries(response.data.entries);
     } catch (err) {
       console.log(err);
       window.localStorage.removeItem("jwt");
@@ -50,7 +56,9 @@ function StudentPage() {
     fetchItems();
   }, []);
 
-  // useEffect(() => {}, [myCourse]);
+  useEffect(() => {
+    console.log(myEntries);
+  }, [myEntries]);
 
   return (
     <div>
@@ -74,10 +82,9 @@ function StudentPage() {
           </Container>
         </Navbar>
         <Container>
-          <AnnouncementsList data={myCourse}></AnnouncementsList>
+          <AnnouncementsList data={myCourses}></AnnouncementsList>
         </Container>
       </Spin>
-      
     </div>
   );
 }
