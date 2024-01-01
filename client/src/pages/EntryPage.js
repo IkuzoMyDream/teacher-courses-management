@@ -16,17 +16,21 @@ function EntryPage() {
         `/api/announcements?filters[id][$eq]=${announcementId}&populate=*`
       );
 
+      // console.log(response);
+
+      // console.log(response.data.data)
+      response = response.data.data[0].attributes;
       console.log(response);
 
-      response = response.data.data[0].attributes;
-
       // error in this part, should take id in setAnnouncement
-
 
       // console.log(response.course.data.attributes.course_name);
       setAnnouncement({
         course: response.course.data.attributes,
-        entry: response.entries.data[0].attributes,
+        entry: {
+          score: response.entries.data[0].attributes.score,
+          id: response.entries.data[0].id,
+        },
         announcer: response.announcer.data.attributes,
       });
     } catch (err) {
@@ -55,7 +59,7 @@ function EntryPage() {
     fetchItem();
   }, []);
   useEffect(() => {
-    console.log(announcement);
+    // console.log(announcement);
   }, [announcement]);
 
   if (announcement.course) {
