@@ -36,6 +36,10 @@
       "relation": "manyToOne",
       "target": "api::course.course",
       "inversedBy": "entries"
+    },
+    "feedback": {
+      "type": "string",
+      "required": true
     }
   }
 }

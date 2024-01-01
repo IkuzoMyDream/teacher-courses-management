@@ -483,6 +483,7 @@ export interface ApiEntryEntry extends Schema.CollectionType {
       'manyToOne',
       'api::course.course'
     >;
+    feedback: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
