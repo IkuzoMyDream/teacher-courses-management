@@ -15,21 +15,17 @@ function EntryPage() {
       let response = await axios.get(
         `/api/announcements?filters[id][$eq]=${announcementId}&populate=*`
       );
-
-      // console.log(response);
-
-      // console.log(response.data.data)
+    
       response = response.data.data[0].attributes;
       console.log(response);
 
-      // error in this part, should take id in setAnnouncement
-
-      // console.log(response.course.data.attributes.course_name);
+  
       setAnnouncement({
         course: response.course.data.attributes,
         entry: {
           score: response.entries.data[0].attributes.score,
           id: response.entries.data[0].id,
+          ack_datetime: response.entries.data[0].attributes.ack_datetime
         },
         announcer: response.announcer.data.attributes,
       });
@@ -40,9 +36,8 @@ function EntryPage() {
     }
   };
 
-  const ackCheck = async () => {
+  const ackCheck = async (e) => {
     try {
-      // error is that unknow id on request lol, it'll be fixed later Zz
       console.log(announcement);
       let response = await axios.put(
         `/api/entries/${announcement.entry.id}/ackCheck`
@@ -75,7 +70,7 @@ function EntryPage() {
                   <Button onClick={ackCheck}>ack</Button>
                 </td>
               ) : (
-                <td>{announcement.entry.ack_datetime}</td>
+                <td>"ack time = {announcement.entry.ack_datetime}"</td>
               )}
             </tr>
           </tbody>
