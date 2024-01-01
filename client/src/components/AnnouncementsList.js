@@ -43,7 +43,8 @@ export default function AnnouncementsList(props) {
               </Card>
             ) : (
               <Link
-                to={`/student/announcements/${d.announcement.id}`}
+                // to={`/student/announcements/${d.announcement.id}`}
+                to={{pathname:`/student/announcements/${d.announcement.id}`}}
                 style={{ textDecoration: "none" }}
               >
                 <Card

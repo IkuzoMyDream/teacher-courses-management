@@ -17,6 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/student/announcements",
     element: <StudentPage />,
+    
   },
   {
     path: "/student/announcements/:announcementId",
