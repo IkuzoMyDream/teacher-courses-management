@@ -16,30 +16,30 @@ function EntryPage() {
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-
   const { state } = useLocation();
-  console.log(state);
+  const [myEntry, setMyEntry] = useState({});
 
   const fetchItem = async () => {
     try {
+      setMyEntry(state.entry);
       // error here!!!!
-      let response = await axios.get(
-        `/api/announcements?filters[id][$eq]=${announcementId}&populate=*`
-      );
+      // let response = await axios.get(
+      //   `/api/announcements?filters[id][$eq]=${announcementId}&populate=*`
+      // );
 
-      response = response.data.data[0].attributes;
-      console.log(response);
+      // response = response.data.data[0].attributes;
+      // console.log(response);
 
-      setAnnouncement({
-        course: response.course.data.attributes,
-        entry: {
-          score: response.entries.data[0].attributes.score,
-          id: response.entries.data[0].id,
-          ack_datetime: response.entries.data[0].attributes.ack_datetime,
-          feedback: response.entries.data[0].attributes.feedback,
-        },
-        announcer: response.announcer.data.attributes,
-      });
+      // setAnnouncement({
+      //   course: response.course.data.attributes,
+      //   entry: {
+      //     score: response.entries.data[0].attributes.score,
+      //     id: response.entries.data[0].id,
+      //     ack_datetime: response.entries.data[0].attributes.ack_datetime,
+      //     feedback: response.entries.data[0].attributes.feedback,
+      //   },
+      //   announcer: response.announcer.data.attributes,
+      // });
     } catch (err) {
       console.log(err);
     } finally {
@@ -75,7 +75,7 @@ function EntryPage() {
     try {
       console.log(announcement);
       let response = await axios.put(
-        `/api/entries/${announcement.entry.id}/ackCheck`
+        `/api/entries/${myEntry.id}/ackCheck`
       );
       console.log(response);
 
@@ -87,17 +87,18 @@ function EntryPage() {
     }
   };
 
-  // useEffect(() => {
-  //   axios.defaults.headers.common = {
-  //     Authorization: `Bearer ${jwt}`,
-  //   };
-  //   fetchItem();
-  // }, []);
   useEffect(() => {
-    // console.log(announcement);
-  }, [announcement]);
+    axios.defaults.headers.common = {
+      Authorization: `Bearer ${jwt}`,
+    };
+    fetchItem();
+  }, []);
 
-  if (announcement.course) {
+  useEffect(() => {
+    console.log(myEntry);
+  }, [myEntry]);
+
+  if (myEntry.course) {
     return (
       <div>
         <Navbar style={{ backgroundColor: "#C3E2C2" }}>
@@ -121,17 +122,15 @@ function EntryPage() {
         <Table>
           <tbody>
             <tr>
-              <td>{announcement.course.course_name}</td>
-              <td>{announcement.entry.score}</td>
-              <td>{announcement.entry.feedback}</td>
-              {!announcement.entry.ack_datetime ? (
+              <td>{myEntry.course.course_name}</td>
+              <td>{myEntry.score}</td>
+              <td>{myEntry.feedback}</td>
+              {!myEntry.ack_datetime ? (
                 <td>
                   <Button onClick={ackCheck}>ack</Button>
                 </td>
               ) : (
-                <td>
-                  "ack time = {formatDate(announcement.entry.ack_datetime)}"
-                </td>
+                <td>"ack time = {formatDate(myEntry.ack_datetime)}"</td>
               )}
             </tr>
           </tbody>
@@ -141,6 +140,51 @@ function EntryPage() {
   } else {
     return <Spin spinning={isLoading}></Spin>;
   }
+
+  // if (announcement.course) {
+  //   return (
+  //     <div>
+  //       <Navbar style={{ backgroundColor: "#C3E2C2" }}>
+  //         <Container>
+  //           <Navbar.Brand>
+  //             <Nav.Link href="https://www.psu.ac.th/" target="_blank">
+  //               <Image
+  //                 src="/PSU-Logo-01.png"
+  //                 alt="PSU Logo"
+  //                 fluid
+  //                 style={{ maxWidth: "100px" }}
+  //               />
+  //             </Nav.Link>
+  //           </Navbar.Brand>
+  //           <h1>ระบบประกาศคะแนนนักศึกษา</h1>
+  //           <Button onClick={handleLogout} variant="danger">
+  //             Logout
+  //           </Button>
+  //         </Container>
+  //       </Navbar>
+  //       <Table>
+  //         <tbody>
+  //           <tr>
+  //             <td>{announcement.course.course_name}</td>
+  //             <td>{announcement.entry.score}</td>
+  //             <td>{announcement.entry.feedback}</td>
+  //             {!announcement.entry.ack_datetime ? (
+  //               <td>
+  //                 <Button onClick={ackCheck}>ack</Button>
+  //               </td>
+  //             ) : (
+  //               <td>
+  //                 "ack time = {formatDate(announcement.entry.ack_datetime)}"
+  //               </td>
+  //             )}
+  //           </tr>
+  //         </tbody>
+  //       </Table>
+  //     </div>
+  //   );
+  // } else {
+  //   return <Spin spinning={isLoading}></Spin>;
+  // }
 }
 
 export default EntryPage;
