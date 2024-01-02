@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AnnouncementsList(props) {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [myEntry, setMyEntry] = useState({});
+  const navigate = useNavigate();
 
   const formatDate = (datetime) => {
     const options = {

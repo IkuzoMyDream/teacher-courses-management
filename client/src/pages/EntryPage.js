@@ -10,41 +10,19 @@ axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
 function EntryPage() {
-  // will be changed names soon
-  const { announcementId } = useParams();
-  const [announcement, setAnnouncement] = useState({});
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
   const { state } = useLocation();
   const [myEntry, setMyEntry] = useState({});
+  const navigate = useNavigate();
 
   const fetchItem = async () => {
     try {
       setMyEntry(state.entry);
-      // error here!!!!
-      // let response = await axios.get(
-      //   `/api/announcements?filters[id][$eq]=${announcementId}&populate=*`
-      // );
-
-      // response = response.data.data[0].attributes;
-      // console.log(response);
-
-      // setAnnouncement({
-      //   course: response.course.data.attributes,
-      //   entry: {
-      //     score: response.entries.data[0].attributes.score,
-      //     id: response.entries.data[0].id,
-      //     ack_datetime: response.entries.data[0].attributes.ack_datetime,
-      //     feedback: response.entries.data[0].attributes.feedback,
-      //   },
-      //   announcer: response.announcer.data.attributes,
-      // });
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
-      // console.log(announcement);
     }
   };
 
@@ -73,13 +51,11 @@ function EntryPage() {
 
   const ackCheck = async (e) => {
     try {
-      console.log(announcement);
-      let response = await axios.put(
-        `/api/entries/${myEntry.id}/ackCheck`
-      );
+      let response = await axios.put(`/api/entries/${myEntry.id}/ackCheck`);
       console.log(response);
 
       fetchItem();
+      navigate("/");
     } catch (err) {
       console.log(err);
     } finally {
@@ -103,6 +79,21 @@ function EntryPage() {
       <div>
         <Navbar style={{ backgroundColor: "#C3E2C2" }}>
           <Container>
+            <Button
+              variant="secondary"
+              onClick={() => navigate("/student/announcements")}
+            >
+              {" "}
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                height="1em"
+                width="1em"
+              >
+                <path d="M18.5 4.14l1 1.72L8.97 12l10.53 6.14-1 1.72L5 12l13.5-7.86z" />
+              </svg>
+              Back
+            </Button>
             <Navbar.Brand>
               <Nav.Link href="https://www.psu.ac.th/" target="_blank">
                 <Image
@@ -140,51 +131,6 @@ function EntryPage() {
   } else {
     return <Spin spinning={isLoading}></Spin>;
   }
-
-  // if (announcement.course) {
-  //   return (
-  //     <div>
-  //       <Navbar style={{ backgroundColor: "#C3E2C2" }}>
-  //         <Container>
-  //           <Navbar.Brand>
-  //             <Nav.Link href="https://www.psu.ac.th/" target="_blank">
-  //               <Image
-  //                 src="/PSU-Logo-01.png"
-  //                 alt="PSU Logo"
-  //                 fluid
-  //                 style={{ maxWidth: "100px" }}
-  //               />
-  //             </Nav.Link>
-  //           </Navbar.Brand>
-  //           <h1>ระบบประกาศคะแนนนักศึกษา</h1>
-  //           <Button onClick={handleLogout} variant="danger">
-  //             Logout
-  //           </Button>
-  //         </Container>
-  //       </Navbar>
-  //       <Table>
-  //         <tbody>
-  //           <tr>
-  //             <td>{announcement.course.course_name}</td>
-  //             <td>{announcement.entry.score}</td>
-  //             <td>{announcement.entry.feedback}</td>
-  //             {!announcement.entry.ack_datetime ? (
-  //               <td>
-  //                 <Button onClick={ackCheck}>ack</Button>
-  //               </td>
-  //             ) : (
-  //               <td>
-  //                 "ack time = {formatDate(announcement.entry.ack_datetime)}"
-  //               </td>
-  //             )}
-  //           </tr>
-  //         </tbody>
-  //       </Table>
-  //     </div>
-  //   );
-  // } else {
-  //   return <Spin spinning={isLoading}></Spin>;
-  // }
 }
 
 export default EntryPage;
