@@ -4,21 +4,24 @@ import { Button, Table, Navbar, Nav, Container, Image } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import useLocalState from "../useLocalStorage";
 import { Spin } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
 function EntryPage() {
+  // will be changed names soon
   const { announcementId } = useParams();
   const [announcement, setAnnouncement] = useState({});
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  const { state } = useLocation();
+  console.log(state);
+
   const fetchItem = async () => {
     try {
-
       // error here!!!!
       let response = await axios.get(
         `/api/announcements?filters[id][$eq]=${announcementId}&populate=*`
@@ -84,12 +87,12 @@ function EntryPage() {
     }
   };
 
-  useEffect(() => {
-    axios.defaults.headers.common = {
-      Authorization: `Bearer ${jwt}`,
-    };
-    fetchItem();
-  }, []);
+  // useEffect(() => {
+  //   axios.defaults.headers.common = {
+  //     Authorization: `Bearer ${jwt}`,
+  //   };
+  //   fetchItem();
+  // }, []);
   useEffect(() => {
     // console.log(announcement);
   }, [announcement]);

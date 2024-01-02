@@ -24,7 +24,7 @@ function StudentPage() {
   const fetchItems = async () => {
     try {
       const response = await axios.get(URL_MY_COURSE);
-      console.log(response);
+      // console.log(response);
       setMyCourses(response.data.courses);
       setMyEntries(response.data.entries);
     } catch (err) {
@@ -56,9 +56,9 @@ function StudentPage() {
     fetchItems();
   }, []);
 
-  useEffect(() => {
-    console.log(myEntries);
-  }, [myEntries]);
+  // useEffect(() => {
+  //   console.log(myEntries);
+  // }, [myEntries]);
 
   return (
     <div>
@@ -82,7 +82,7 @@ function StudentPage() {
           </Container>
         </Navbar>
         <Container>
-          <AnnouncementsList data={myCourses}></AnnouncementsList>
+          <AnnouncementsList courses={myCourses} entries={myEntries}></AnnouncementsList>
         </Container>
       </Spin>
     </div>

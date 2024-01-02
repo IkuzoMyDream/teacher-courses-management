@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function AnnouncementsList(props) {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [myEntry, setMyEntry] = useState({});
 
   const formatDate = (datetime) => {
     const options = {
@@ -20,10 +21,15 @@ export default function AnnouncementsList(props) {
 
   const currTime = new Date().getTime();
 
-  if (props.data) {
+  useEffect(() => {
+    console.log(myEntry);
+  }, [myEntry]);
+
+  if (props.courses && props.entries) {
+    // console.log(props);
     return (
       <div>
-        {props.data.map((d) => (
+        {props.courses.map((d) => (
           <div key={d.id}>
             {new Date(d.announcement.publish_datetime).getTime() > currTime ? (
               <Card
@@ -32,7 +38,6 @@ export default function AnnouncementsList(props) {
                 onMouseOut={() => setHoveredCard(null)}
                 style={{
                   transition: "background-color 0.3s",
-                  // backgroundColor: hoveredCard === d.id ? "#596FB7" : "inherit",
                   cursor: "not-allowed",
                 }}
               >
@@ -43,17 +48,24 @@ export default function AnnouncementsList(props) {
               </Card>
             ) : (
               <Link
-                // to={`/student/announcements/${d.announcement.id}`}
-                to={{pathname:`/student/announcements/${d.announcement.id}`}}
+                to={{ pathname: `/student/announcements/${d.id}` }}
+                state={{
+                  entry: props.entries.find(
+                    (entry) => entry.course.id === d.id
+                  ),
+                }}
                 style={{ textDecoration: "none" }}
               >
                 <Card
-                  className={`mb-3 ${hoveredCard === d.id ? "custom-hover" : ""}`}
+                  className={`mb-3 ${
+                    hoveredCard === d.id ? "custom-hover" : ""
+                  }`}
                   onMouseOver={() => setHoveredCard(d.id)}
                   onMouseOut={() => setHoveredCard(null)}
                   style={{
                     transition: "background-color 0.3s",
-                    backgroundColor: hoveredCard === d.id ? "#596FB7" : "inherit",
+                    backgroundColor:
+                      hoveredCard === d.id ? "#596FB7" : "inherit",
                     cursor: "pointer",
                   }}
                 >
