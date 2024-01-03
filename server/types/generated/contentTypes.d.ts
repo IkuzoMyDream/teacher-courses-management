@@ -391,6 +391,7 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
       'manyToOne',
       'api::course.course'
     >;
+    description: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -421,8 +422,8 @@ export interface ApiCourseCourse extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    course_name: Attribute.String & Attribute.Required;
-    course_enrollers: Attribute.Relation<
+    name: Attribute.String & Attribute.Required;
+    enrollers: Attribute.Relation<
       'api::course.course',
       'manyToMany',
       'plugin::users-permissions.user'
@@ -437,6 +438,9 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'oneToMany',
       'api::entry.entry'
     >;
+    credit: Attribute.String & Attribute.Required;
+    enrollment_type: Attribute.String & Attribute.Required;
+    section: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

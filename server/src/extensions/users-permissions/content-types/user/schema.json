@@ -82,7 +82,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::course.course",
-      "mappedBy": "course_enrollers"
+      "mappedBy": "enrollers"
     }
   }
 }

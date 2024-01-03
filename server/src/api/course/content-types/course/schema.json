@@ -12,11 +12,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "course_name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "course_enrollers": {
+    "enrollers": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
@@ -33,6 +33,18 @@
       "relation": "oneToMany",
       "target": "api::entry.entry",
       "mappedBy": "course"
+    },
+    "credit": {
+      "type": "string",
+      "required": true
+    },
+    "enrollment_type": {
+      "type": "string",
+      "required": true
+    },
+    "section": {
+      "type": "string",
+      "required": true
     }
   }
 }

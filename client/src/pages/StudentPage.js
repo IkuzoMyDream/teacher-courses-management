@@ -14,7 +14,7 @@ axios.defaults.baseURL =
 //localhost:1337/api/users/me?populate[courses][populate][announcement][populate]=*&populate[entries][populate]=course
 
 const URL_MY_COURSE =
-  "/api/users/me?populate[courses][populate][announcement][populate]=*&populate[entries][populate]=course";
+  "/api/users/me?populate[courses][populate][announcements][populate]=*&populate[entries][populate]=course";
 
 function StudentPage() {
   const [myCourses, setMyCourses] = useState([]);
@@ -26,7 +26,6 @@ function StudentPage() {
   const fetchItems = async () => {
     try {
       const response = await axios.get(URL_MY_COURSE);
-      // console.log(response);
       setMyCourses(response.data.courses);
       setMyEntries(response.data.entries);
     } catch (err) {
