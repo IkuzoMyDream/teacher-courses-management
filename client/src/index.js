@@ -15,11 +15,12 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/student/announcements",
+    path: "/student/courses",
     element: <StudentPage />,
     
   },
   {
+    // will be changed
     path: "/student/announcements/:announcementId",
     element: <EntryPage />,
   },

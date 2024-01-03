@@ -26,7 +26,7 @@ export default function LoginPage() {
       axios.defaults.headers.common = {
         Authorization: `Bearer ${jwt}`,
       };
-      navigate("/student/announcements");
+      navigate("/student/courses");
     }
   }, [jwt]);
 
@@ -50,7 +50,7 @@ export default function LoginPage() {
 
       if (result.data.role) {
         if (result.data.role.name === "Student") {
-          navigate("/student/announcements");
+          navigate("/student/courses");
         } else if (result.data.role.name === "Staff") {
           navigate("/staff");
         }

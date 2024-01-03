@@ -1,10 +1,12 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import AnnouncementsList from "../components/AnnouncementsList";
-import useLocalState from "../useLocalStorage";
 import { Button, Container, Nav, Navbar, Image, Table } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spin } from "antd";
+import axios from "axios";
+import useLocalState from "../useLocalStorage";
+import AnnouncementsList from "../components/AnnouncementsList";
+import CoursesList from "../components/courses-list";
+import StudentNavbar from "../components/student-navbar";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -63,27 +65,8 @@ function StudentPage() {
   return (
     <div>
       <Spin spinning={isLoading}>
-        <Navbar style={{ backgroundColor: "#C3E2C2" }}>
-          <Container>
-            <Navbar.Brand>
-              <Nav.Link href="https://www.psu.ac.th/" target="_blank">
-                <Image
-                  src="/PSU-Logo-01.png"
-                  alt="PSU Logo"
-                  fluid
-                  style={{ maxWidth: "100px" }}
-                />
-              </Nav.Link>
-            </Navbar.Brand>
-            <h1>ระบบประกาศคะแนนนักศึกษา</h1>
-            <Button onClick={handleLogout} variant="danger">
-              Logout
-            </Button>
-          </Container>
-        </Navbar>
-        <Container>
-          <AnnouncementsList courses={myCourses} entries={myEntries}></AnnouncementsList>
-        </Container>
+        <StudentNavbar></StudentNavbar>
+        <CoursesList data={myCourses}></CoursesList>
       </Spin>
     </div>
   );

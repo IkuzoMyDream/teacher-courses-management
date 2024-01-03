@@ -22,11 +22,11 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "courses"
     },
-    "announcement": {
+    "announcements": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::announcement.announcement",
-      "inversedBy": "course"
+      "mappedBy": "course"
     },
     "entries": {
       "type": "relation",
