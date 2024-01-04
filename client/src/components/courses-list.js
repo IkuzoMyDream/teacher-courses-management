@@ -1,12 +1,19 @@
 import { Card, Container, Table } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { dataContext } from "../pages/StudentPage";
+import { useDataContext } from "../utils/context";
 
 export default function CoursesList(props) {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const myData = useDataContext();
+
+  // console.log(myData)
 
   if (props.data) {
+    // console.log(myData)
     props.data.sort((a, b) => b.announcements.length - a.announcements.length);
-    console.log(props.data);
+
     return (
       <div>
         {props.data.map((d) => (
@@ -14,43 +21,45 @@ export default function CoursesList(props) {
             <Container>
               <Table hover bordered>
                 <tbody>
-                    {d.announcements.length} ประกาศ
+                  {d.announcements.length} ประกาศ
                   <tr>
                     {d.announcements.length !== 0 ? (
                       <td>
-                        <Card
-                          className={`mb-3 ${
-                            hoveredCard === d.id ? "custom-hover" : ""
-                          }`}
-                          onMouseOver={() => setHoveredCard(d.id)}
-                          onMouseOut={() => setHoveredCard(null)}
-                          style={{
-                            transition: "background-color 0.3s",
-                            backgroundColor:
-                              hoveredCard === d.id ? "#596FB7" : "inherit",
-                            cursor: "pointer",
-                          }}
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          to={`/student/courses/${
+                            d.name.split(" ")[0]
+                          }/announcements`}
                         >
-                          <Card.Body>
-                            <Card.Title>{d.name}</Card.Title>
-                            <Card.Subtitle>{d.section}</Card.Subtitle>
-                            <Card.Text>
-                              {d.credit} หน่วยกิต{" "}
-                              {d.enrollment_type === "C" ? "Credit" : "Audit"}
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
+                          <Card
+                            className={`mb-3 ${
+                              hoveredCard === d.id ? "custom-hover" : ""
+                            }`}
+                            onMouseOver={() => setHoveredCard(d.id)}
+                            onMouseOut={() => setHoveredCard(null)}
+                            style={{
+                              transition: "background-color 0.3s",
+                              backgroundColor:
+                                hoveredCard === d.id ? "#596FB7" : "inherit",
+                              cursor: "pointer",
+                            }}
+                            // onClick={() => console.log(d)}
+                          >
+                            <Card.Body>
+                              <Card.Title>{d.name}</Card.Title>
+                              <Card.Subtitle>{d.section}</Card.Subtitle>
+                              <Card.Text>
+                                {d.credit} หน่วยกิต{" "}
+                                {d.enrollment_type === "C" ? "Credit" : "Audit"}
+                              </Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </Link>
                       </td>
                     ) : (
                       <td>
                         <Card
-                          className={`mb-3 ${
-                            hoveredCard === d.id ? "custom-hover" : ""
-                          }`}
-                          onMouseOver={() => setHoveredCard(d.id)}
-                          onMouseOut={() => setHoveredCard(null)}
                           style={{
-                            transition: "background-color 0.3s",
                             cursor: "not-allowed",
                           }}
                         >

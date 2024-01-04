@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import StudentPage from "./pages/StudentPage";
 import StaffPage from "./pages/StaffPage";
 import EntryPage from "./pages/EntryPage";
+import AnnouncementsPage from "./pages/AnnouncementsPage";
 
 const router = createBrowserRouter([
   {
@@ -17,12 +18,11 @@ const router = createBrowserRouter([
   {
     path: "/student/courses",
     element: <StudentPage />,
-    
   },
   {
     // will be changed
-    path: "/student/announcements/:announcementId",
-    element: <EntryPage />,
+    path: "/student/courses/:courseId/announcements",
+    element: <AnnouncementsPage  />,
   },
   {
     path: "/staff",

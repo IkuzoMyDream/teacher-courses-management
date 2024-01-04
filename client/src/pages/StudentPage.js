@@ -1,12 +1,11 @@
-import { Button, Container, Nav, Navbar, Image, Table } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spin } from "antd";
 import axios from "axios";
 import useLocalState from "../useLocalStorage";
-import AnnouncementsList from "../components/AnnouncementsList";
 import CoursesList from "../components/courses-list";
 import StudentNavbar from "../components/student-navbar";
+import { DataProvider } from "../utils/context";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -19,6 +18,7 @@ const URL_MY_COURSE =
 function StudentPage() {
   const [myCourses, setMyCourses] = useState([]);
   const [myEntries, setMyEntries] = useState([]);
+  const [myData, setMydata] = useState([]);
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ function StudentPage() {
   const fetchItems = async () => {
     try {
       const response = await axios.get(URL_MY_COURSE);
+      setMydata(response.data);
       setMyCourses(response.data.courses);
       setMyEntries(response.data.entries);
     } catch (err) {
@@ -57,18 +58,15 @@ function StudentPage() {
     fetchItems();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(myEntries);
-  // }, [myEntries]);
-
   return (
-    <div>
+    <DataProvider>
       <Spin spinning={isLoading}>
         <StudentNavbar></StudentNavbar>
         <CoursesList data={myCourses}></CoursesList>
       </Spin>
-    </div>
+    </DataProvider>
   );
 }
 
 export default StudentPage;
+export const dataContext = createContext(null);
