@@ -1,22 +1,20 @@
 import { Card, Container, Table } from "react-bootstrap";
-import { useEffect, useState, useContext } from "react";
+import {  useState } from "react";
 import { Link } from "react-router-dom";
-import { dataContext } from "../pages/StudentPage";
 import { useDataContext } from "../utils/context";
+
 
 export default function CoursesList(props) {
   const [hoveredCard, setHoveredCard] = useState(null);
   const myData = useDataContext();
 
-  // console.log(myData)
-
-  if (props.data) {
-    // console.log(myData)
-    props.data.sort((a, b) => b.announcements.length - a.announcements.length);
-
+  if (myData) {
+    myData.courses.sort(
+      (a, b) => b.announcements.length - a.announcements.length
+    );
     return (
       <div>
-        {props.data.map((d) => (
+        {myData.courses.map((d) => (
           <div key={d.id}>
             <Container>
               <Table hover bordered>

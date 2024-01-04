@@ -24,7 +24,6 @@ export const DataProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("useEffect is running");
     fetchData();
   }, []);
 

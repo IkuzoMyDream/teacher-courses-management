@@ -4,7 +4,6 @@ import { DataProvider } from "../utils/context";
 
 function AnnouncementsPage() {
 
-
   return (
     <DataProvider>
       <AnnouncementsList></AnnouncementsList>;
