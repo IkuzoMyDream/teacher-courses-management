@@ -1,8 +1,8 @@
 import { Card, Container, Table } from "react-bootstrap";
-import {  useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDataContext } from "../utils/context";
-
+import { Spin } from "antd";
 
 export default function CoursesList(props) {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -41,7 +41,6 @@ export default function CoursesList(props) {
                                 hoveredCard === d.id ? "#596FB7" : "inherit",
                               cursor: "pointer",
                             }}
-                            // onClick={() => console.log(d)}
                           >
                             <Card.Body>
                               <Card.Title>{d.name}</Card.Title>
@@ -80,5 +79,10 @@ export default function CoursesList(props) {
         ))}
       </div>
     );
+  }
+  else {
+    return (
+      <Spin></Spin>
+    )
   }
 }

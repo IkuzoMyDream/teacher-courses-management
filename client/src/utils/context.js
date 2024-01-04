@@ -3,6 +3,8 @@ import axios from "axios";
 import useLocalState from "../useLocalStorage";
 
 const DataContext = createContext();
+axios.defaults.baseURL =
+  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
 export const DataProvider = ({ children }) => {
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -15,11 +17,12 @@ export const DataProvider = ({ children }) => {
         Authorization: `Bearer ${jwt}`,
       };
       const response = await axios.get(
-        "/api/users/me?populate[courses][populate][announcements][populate]=*&populate[entries][populate]=course"
+        "/api/users/me?populate[courses][populate][announcements][populate]=*&populate[entries][populate]=*"
       );
       setMyData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
     }
   };
 

@@ -20,9 +20,12 @@ const router = createBrowserRouter([
     element: <StudentPage />,
   },
   {
-    // will be changed
-    path: "/student/courses/:courseId/announcements",
-    element: <AnnouncementsPage  />,
+    path: "/student/courses/:courseName/announcements",
+    element: <AnnouncementsPage />,
+  },
+  {
+    path: "/student/courses/:courseName/announcements/:announcementId/entry",
+    element: <EntryPage />,
   },
   {
     path: "/staff",
