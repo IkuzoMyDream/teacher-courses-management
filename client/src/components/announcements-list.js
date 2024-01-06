@@ -27,6 +27,7 @@ export default function AnnouncementsList() {
   const currTime = new Date().getTime();
 
   if (myData) {
+    
     const findCourse = myData.courses.find(
       (course) => course.name.split(" ")[0] === courseName
     );

@@ -10,6 +10,7 @@ export default function EntryList() {
   const myData = useDataContext();
 
   if (myData) {
+    console.log(myData.entries);
     const myEntry = myData.entries.find(
       (entry) => entry.announcement.id == announcementId
     );
@@ -22,7 +23,7 @@ export default function EntryList() {
         .then(window.location.reload());
     };
 
-    console.log(myEntry);
+    // console.log(myEntry);
 
     return (
       <div>
