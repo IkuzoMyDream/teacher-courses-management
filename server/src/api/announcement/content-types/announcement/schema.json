@@ -40,6 +40,9 @@
     },
     "description": {
       "type": "text"
+    },
+    "full_score": {
+      "type": "string"
     }
   }
 }

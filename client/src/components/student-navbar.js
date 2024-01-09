@@ -14,7 +14,7 @@ export default function StudentNavbar() {
     axios.defaults.headers.common = {
       Authorization: ``,
     };
-    navigate("/");
+    navigate("/login");
   };
 
   return (

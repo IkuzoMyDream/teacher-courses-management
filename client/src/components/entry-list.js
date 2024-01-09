@@ -3,14 +3,12 @@ import { useDataContext } from "../utils/context";
 import { useParams } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import axios from "axios";
-import { useState } from "react";
 
 export default function EntryList() {
   const { announcementId } = useParams();
   const myData = useDataContext();
 
   if (myData) {
-    console.log(myData.entries);
     const myEntry = myData.entries.find(
       (entry) => entry.announcement.id == announcementId
     );
@@ -22,8 +20,6 @@ export default function EntryList() {
         .put(`/api/entries/${myEntry.id}/ackCheck`)
         .then(window.location.reload());
     };
-
-    // console.log(myEntry);
 
     return (
       <div>

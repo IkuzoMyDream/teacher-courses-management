@@ -392,6 +392,7 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
       'api::course.course'
     >;
     description: Attribute.Text;
+    full_score: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
