@@ -27,56 +27,41 @@ export default function AnnouncementsList() {
   const currTime = new Date().getTime();
 
   if (myData) {
-    
     const findCourse = myData.courses.find(
       (course) => course.name.split(" ")[0] === courseName
     );
     const announcements = findCourse.announcements;
+    console.log(announcements);
     return (
-      <div>
+      <Container>
         {announcements.map((d) => (
-          <div key={d.id}>
-            <Container>
-              <Table hover bordered>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        to={`/student/courses/${courseName}/announcements/${d.id}/entry`}
-                      >
-                        <Card
-                          className={`mb-3 ${
-                            hoveredCard === d.id ? "custom-hover" : ""
-                          }`}
-                          onMouseOver={() => setHoveredCard(d.id)}
-                          onMouseOut={() => setHoveredCard(null)}
-                          style={{
-                            transition: "background-color 0.3s",
-                            backgroundColor:
-                              hoveredCard === d.id ? "#596FB7" : "inherit",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <Card.Body>
-                            <Card.Title>{d.title}</Card.Title>
-                            <Card.Subtitle>{d.description}</Card.Subtitle>
-                          </Card.Body>
-                          <Card.Text>
-                            {formatDate(d.publish_datetime)}
-                          </Card.Text>
-                        </Card>
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Container>
-          </div>
+          <Link
+            key={d.id}
+            style={{ textDecoration: "none" }}
+            to={`/student/courses/${courseName}/announcements/${d.id}/entry`}
+          >
+            <Card
+              className={`text-center mb-3 ${hoveredCard === d.id ? "custom-hover" : ""}`}
+              onMouseOver={() => setHoveredCard(d.id)}
+              onMouseOut={() => setHoveredCard(null)}
+              style={{
+                transition: "background-color 0.3s",
+                backgroundColor: hoveredCard === d.id ? "#c4fcf8" : "#f8fcfc",
+                cursor: "pointer",
+              }}
+            >
+              <Card.Body>
+                <Card.Title as="h1">{d.title}</Card.Title>
+                <Card.Subtitle>{d.description}</Card.Subtitle>
+                <Card.Text>{formatDate(d.publish_datetime)}</Card.Text>
+                <Card.Text>{d.announcer.username}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Link>
         ))}
-      </div>
+      </Container>
     );
   } else {
-    return <Spin></Spin>
+    return <Spin></Spin>;
   }
 }
