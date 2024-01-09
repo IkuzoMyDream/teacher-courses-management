@@ -7,16 +7,14 @@ import StudentNavbar from "../components/student-navbar";
 import { DataProvider } from "../utils/context";
 
 function StudentPage() {
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <DataProvider>
-      <Spin spinning={isLoading}>
         <StudentNavbar></StudentNavbar>
         <CoursesList></CoursesList>
-      </Spin>
     </DataProvider>
   );
 }
 
 export default StudentPage;
+  

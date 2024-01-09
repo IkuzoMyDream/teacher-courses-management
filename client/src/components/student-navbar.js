@@ -18,7 +18,7 @@ export default function StudentNavbar() {
   };
 
   return (
-    <Navbar style={{ backgroundColor: "#C3E2C2" }}>
+    <Navbar style={{ backgroundColor: "#f0fcfc" }}>
       <Container>
         {pathname === "/student/courses" ? (
           console.log("home")

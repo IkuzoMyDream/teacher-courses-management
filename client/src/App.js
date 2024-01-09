@@ -10,26 +10,24 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 
 function App() {
   return (
-    <div className="container">
+    <div className="">
       <Router>
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route
               element={<StudentPage></StudentPage>}
               path="/student/courses"
-              errorElement={<StudentPage></StudentPage>}
             ></Route>
             <Route
               element={<AnnouncementsPage />}
               path="/student/courses/:courseName/announcements"
-              errorElement={<AnnouncementsPage></AnnouncementsPage>}
             ></Route>
             <Route
               element={<EntryPage />}
               path="/student/courses/:courseName/announcements/:announcementId/entry"
-              errorElement={<EntryPage></EntryPage>}
             ></Route>
           </Route>
+          <Route element={<LoginPage />} path="/"></Route>
           <Route element={<LoginPage />} path="/login"></Route>
         </Routes>
       </Router>

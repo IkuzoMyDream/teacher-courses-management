@@ -35,8 +35,8 @@ export default function EntryList() {
           </Card.Body>
         </Card>
       </div>
-    );
+    )
   } else {
-    return <Spin></Spin>;
+    return <Spin></Spin>
   }
 }

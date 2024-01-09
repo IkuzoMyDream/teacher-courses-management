@@ -77,6 +77,6 @@ export default function AnnouncementsList() {
       </div>
     );
   } else {
-    return <Spin></Spin>;
+    return <Spin></Spin>
   }
 }
