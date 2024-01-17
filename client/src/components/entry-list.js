@@ -9,6 +9,20 @@ export default function EntryList() {
   const myData = useDataContext();
 
   if (myData) {
+    const formatDate = (datetime) => {
+      const options = {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZone: "Asia/Bangkok",
+      };
+      return new Intl.DateTimeFormat("en-GB", options).format(
+        new Date(datetime)
+      );
+    };
     const myEntry = myData.entries.find(
       (entry) => entry.announcement.id == announcementId
     );
@@ -21,22 +35,32 @@ export default function EntryList() {
         .then(window.location.reload());
     };
 
-    return (
-      <div>
-        <Card>
-          <Card.Body>
-            <Card.Text>{myEntry.score}</Card.Text>
-            <Card.Text>{myEntry.feedback}</Card.Text>
-            {myEntry.ack_datetime ? (
-              <Card.Text>{myEntry.ack_datetime}</Card.Text>
-            ) : (
-              <Button onClick={ack}>ยืนยัน</Button>
-            )}
-          </Card.Body>
-        </Card>
-      </div>
-    )
+    if (myEntry) {
+      console.log(myEntry);
+      return (
+        <div>
+          <Card>
+            <Card.Body>
+              <Card.Text as="h1">score: {myEntry.score}</Card.Text>
+              <Card.Text as="h1">feedback: {myEntry.feedback}</Card.Text>
+              {myEntry.ack_datetime ? (
+                <Card.Text>ยืนยันแล้วเมื่อ {formatDate(myEntry.ack_datetime)}</Card.Text>
+              ) : (
+                <Button onClick={ack}>ยืนยัน</Button>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
+      );
+    } else {
+      console.log(myEntry);
+      return (
+        <div>
+          <h1>คุณไม่มีคะแนน กรุณาติดต่ออาจารย์ประจำวิชา</h1>
+        </div>
+      );
+    }
   } else {
-    return <Spin></Spin>
+    return <Spin></Spin>;
   }
 }

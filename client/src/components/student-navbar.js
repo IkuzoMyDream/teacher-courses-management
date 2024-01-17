@@ -6,8 +6,6 @@ export default function StudentNavbar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  console.log(pathname);
-
   const handleLogout = (e) => {
     e.preventDefault();
     window.localStorage.removeItem("jwt");
@@ -18,7 +16,7 @@ export default function StudentNavbar() {
   };
 
   return (
-    <Navbar style={{ backgroundColor: "#f0fcfc" }}>
+    <Navbar style={{ backgroundColor: "rgba(0, 60, 113, 0.5)" }}>
       <Container>
         {pathname === "/student/courses" ? (
           console.log("home")
@@ -50,7 +48,7 @@ export default function StudentNavbar() {
           </Nav.Link>
         </Navbar.Brand>
         <Nav.Item>
-          <h1>ระบบประกาศคะแนนนักศึกษา</h1>
+          <h1 style={{color:"white"}}>ระบบประกาศคะแนนนักศึกษา</h1>
         </Nav.Item>
         <Button onClick={handleLogout} variant="danger">
           Logout

@@ -34,7 +34,6 @@ export default function OverallScores() {
 
       response = response.data.data[0].attributes.entries.data;
       const scores = response.map((d) => d.attributes.score);
-      console.log(scores);
       const bins = [0, 0, 0, 0, 0];
       for (let i = 0; i < response.length; i++) {
         for (let j = 0; j < 5; j++) {
@@ -42,7 +41,6 @@ export default function OverallScores() {
             scores[i] >= (j * full_score) / 5 &&
             scores[i] <= ((j + 1) * full_score) / 5
           ) {
-            console.log(scores[i]);
             bins[j]++;
             break;
           }
