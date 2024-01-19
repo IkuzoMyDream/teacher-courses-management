@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import useLocalState from "../useLocalStorage";
+import useLocalState from "../utils/useLocalStorage";
 import { Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [submitEnabled, setSubmitEnabled] = useState(true);
-  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [auth, setAuth] = useLocalState(null, "auth");
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -21,47 +23,41 @@ export default function LoginPage() {
     setPassword(e.target.value);
   };
 
-  useEffect(() => {
-    if (jwt !== "") {
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${jwt}`,
-      };
-      navigate("/student/courses");
-    }
-  }, [jwt]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitEnabled(false);
 
     try {
-      let result = await axios.post("http://localhost:1337/api/auth/local", {
+      // get JWT
+      const result = await axios.post("http://localhost:1337/api/auth/local", {
         identifier: username,
         password: password,
       });
-      setJwt(result.data.jwt);
-      console.log(result.data.jwt);
+      setAuth({
+        jwt: result.data.jwt,
+        role: result.data.user.email[0].match(/\d/) ? "Student" : "Staff",
+      });
+
       axios.defaults.headers.common = {
         Authorization: `Bearer ${result.data.jwt}`,
       };
-      result = await axios.get(
-        "http://localhost:1337/api/users/me?populate=role"
-      );
-
-      if (result.data.role) {
-        if (result.data.role.name === "Student") {
-          navigate("/student/courses");
-        } else if (result.data.role.name === "Staff") {
-          navigate("/staff");
-        }
-      }
     } catch (e) {
       setSubmitEnabled(true);
       console.log(e);
     }
   };
 
-  return (
+  useEffect(() => {
+    if (auth?.role === "Student") {
+      navigate("/student/courses");
+      // navigate(from, { replace: true });
+    } else if (auth?.role === "Staff") {
+      navigate("/staff");
+      // navigate(from, { replace: true });
+    }
+  }, [auth?.role]);
+
+  return (  
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="">
         <Form.Label>Email address</Form.Label>

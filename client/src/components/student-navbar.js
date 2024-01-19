@@ -8,7 +8,7 @@ export default function StudentNavbar() {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    window.localStorage.removeItem("jwt");
+    window.localStorage.removeItem("auth");
     axios.defaults.headers.common = {
       Authorization: ``,
     };
@@ -19,12 +19,9 @@ export default function StudentNavbar() {
     <Navbar style={{ backgroundColor: "rgba(0, 60, 113, 0.5)" }}>
       <Container>
         {pathname === "/student/courses" ? (
-          console.log("home")
+          <></>
         ) : (
-          <Button
-            variant="secondary"
-            onClick={() => navigate(-1)}
-          >
+          <Button variant="secondary" onClick={() => navigate(-1)}>
             {" "}
             <svg
               viewBox="0 0 24 24"
@@ -48,7 +45,7 @@ export default function StudentNavbar() {
           </Nav.Link>
         </Navbar.Brand>
         <Nav.Item>
-          <h1 style={{color:"white"}}>ระบบประกาศคะแนนนักศึกษา</h1>
+          <h1 style={{ color: "white" }}>ระบบประกาศคะแนนนักศึกษา</h1>
         </Nav.Item>
         <Button onClick={handleLogout} variant="danger">
           Logout

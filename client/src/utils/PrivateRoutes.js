@@ -1,7 +1,13 @@
-import { Outlet, Navigate } from "react-router-dom";
-import useLocalState from "../useLocalStorage";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
+import useLocalState from "./useLocalStorage";
 
-export default function PrivateRoutes() {
-  const [jwt, setJwt] = useLocalState("", "jwt");
-  return jwt ? <Outlet /> : <Navigate to={"/login"} />;
+export default function PrivateRoutes({ allowedRole }) {
+  const [auth, setAuth] = useLocalState(null, "auth");
+  const location = useLocation();
+
+  return auth?.role == allowedRole ? (
+    <Outlet />
+  ) : (
+    <Navigate to={"/login"} state={{ from: location }} replace />
+  );
 }

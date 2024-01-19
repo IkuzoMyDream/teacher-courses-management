@@ -1,3 +1,5 @@
-export default function StaffPage() {
-  return "Hello Staff";
+function StaffPage() {
+  return <div>Hello staff</div>;
 }
+
+export default StaffPage;

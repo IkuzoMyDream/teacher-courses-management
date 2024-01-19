@@ -16,13 +16,14 @@ export default function CoursesList(props) {
       <Container>
         <div className="row">
           {myData.courses.map((d) => (
-            <div className="col-md-6">
+            <div className="col-md-6" key={d.id}>
               {d.announcements.length != 0 ? (
                 <Link
                   style={{ textDecoration: "none" }}
                   to={`/student/courses/${d.name.split(" ")[0]}/announcements`}
                 >
                   <Card
+                    
                     className="mb-3"
                     onMouseOver={() => setHoveredCard(d.id)}
                     onMouseOut={() => setHoveredCard(null)}
@@ -65,7 +66,7 @@ export default function CoursesList(props) {
                       {d.name.split(" ").slice(1).join(" ")}
                     </Card.Title>
                     <Card.Subtitle>section {d.section}</Card.Subtitle>
-                    <Card.Text> 
+                    <Card.Text>
                       {d.credit} หน่วยกิต{" "}
                       {d.enrollment_type === "C" ? "Credit" : "Audit"}
                     </Card.Text>

@@ -41,10 +41,14 @@ export default function EntryList() {
         <div>
           <Card>
             <Card.Body>
-              <Card.Text as="h1">score: {myEntry.score}</Card.Text>
+              <Card.Text as="h1">
+                score: {myEntry.score}/{myEntry.announcement.full_score}
+              </Card.Text>
               <Card.Text as="h1">feedback: {myEntry.feedback}</Card.Text>
               {myEntry.ack_datetime ? (
-                <Card.Text>ยืนยันแล้วเมื่อ {formatDate(myEntry.ack_datetime)}</Card.Text>
+                <Card.Text>
+                  ยืนยันแล้วเมื่อ {formatDate(myEntry.ack_datetime)}
+                </Card.Text>
               ) : (
                 <Button onClick={ack}>ยืนยัน</Button>
               )}

@@ -4,12 +4,12 @@ import { Bar } from "react-chartjs-2";
 import axios from "axios";
 import { Chart } from "chart.js/auto";
 import { useEffect, useState } from "react";
-import useLocalState from "../useLocalStorage";
+import useLocalState from "../utils/useLocalStorage";
 import { Spin } from "antd";
 
 export default function OverallScores() {
   const myData = useDataContext();
-  const [jwt, setjwt] = useLocalState("", "jwt");
+  const [auth, setAuth] = useLocalState(null, "auth");
   const { announcementId } = useParams();
   const [overallScores, setOverallScores] = useState([0, 0, 0, 0, 0]);
   const [labels, setLabels] = useState([1, 2, 3, 4, 5]);
@@ -19,7 +19,7 @@ export default function OverallScores() {
       process.env.REACT_APP_BASE_URL || "http://localhost:1337";
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${jwt}`,
+        Authorization: `Bearer ${auth.jwt}`,
       };
       let response = await axios.get(
         `/api/announcements?filters[id][$eq]=${announcementId}&populate=entries`

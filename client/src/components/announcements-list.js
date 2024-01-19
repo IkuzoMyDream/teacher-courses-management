@@ -68,6 +68,7 @@ export default function AnnouncementsList() {
             </Link>
           ) : (
             <Card
+              key={d.id}
               className={`text-center mb-3 ${
                 hoveredCard === d.id ? "custom-hover" : ""
               }`}
