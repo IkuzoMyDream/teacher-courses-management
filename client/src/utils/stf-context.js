@@ -3,10 +3,10 @@ import axios from "axios";
 import useLocalState from "./useLocalStorage";
 
 const DataContext = createContext();
-  axios.defaults.baseURL =
-    process.env.REACT_APP_BASE_URL || "http://localhost:1337";
+axios.defaults.baseURL =
+  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
-export const DataProvider = ({ children }) => {
+export const DataProviderStf = ({ children }) => {
   const [auth, setAuth] = useLocalState(null, "auth");
 
   const [myData, setMyData] = useState(null);
@@ -17,7 +17,7 @@ export const DataProvider = ({ children }) => {
         Authorization: `Bearer ${auth.jwt}`,
       };
       const response = await axios.get(
-        "/api/users/me?populate[courses][populate][announcements][populate]=*&populate[entries][populate]=*"
+        "/api/users/me?populate=courses.announcements.entries.owner,courses.announcements.announcer"
       );
       setMyData(response.data);
     } catch (error) {
@@ -35,4 +35,4 @@ export const DataProvider = ({ children }) => {
   return <DataContext.Provider value={myData}>{children}</DataContext.Provider>;
 };
 
-export const useDataContext = () => useContext(DataContext);
+export const useDataContextStf = () => useContext(DataContext);

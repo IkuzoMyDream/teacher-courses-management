@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spin } from "antd";
-import CoursesList from "../components/courses-list";
-import StudentNavbar from "../components/student-navbar";
-import { DataProvider } from "../utils/context";
+import CoursesList from "../../components/std/courses-list";
+import StudentNavbar from "../../components/std/student-navbar";
+import { DataProvider } from "../../utils/context";
 
 function StudentPage() {
 

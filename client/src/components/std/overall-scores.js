@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useDataContext } from "../utils/context";
+import { useDataContext } from "../../utils/context";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
 import { Chart } from "chart.js/auto";
 import { useEffect, useState } from "react";
-import useLocalState from "../utils/useLocalStorage";
+import useLocalState from "../../utils/useLocalStorage";
 import { Spin } from "antd";
 
 export default function OverallScores() {

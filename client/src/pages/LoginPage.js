@@ -52,7 +52,7 @@ export default function LoginPage() {
       navigate("/student/courses");
       // navigate(from, { replace: true });
     } else if (auth?.role === "Staff") {
-      navigate("/staff");
+      navigate("/staff/courses");
       // navigate(from, { replace: true });
     }
   }, [auth?.role]);

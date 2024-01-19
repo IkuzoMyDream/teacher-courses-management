@@ -1,7 +1,7 @@
-import EntryList from "../components/entry-list";
-import OverallScores from "../components/overall-scores";
-import StudentNavbar from "../components/student-navbar";
-import { DataProvider } from "../utils/context";
+import EntryList from "../../components/std/entry-list";
+import OverallScores from "../../components/std/overall-scores";
+import StudentNavbar from "../../components/std/student-navbar";
+import { DataProvider } from "../../utils/context";
 
 function EntryPage() {
     return (

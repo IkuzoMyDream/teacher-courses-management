@@ -1,12 +1,13 @@
 import { Card, Container } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useDataContext } from "../utils/context";
+// import { useDataContext } from "../../utils/context";
 import { Spin } from "antd";
+import { useDataContextStf } from "../../utils/stf-context";
 
 export default function AnnouncementsList() {
   const [hoveredCard, setHoveredCard] = useState(null);
-  const myData = useDataContext();
+  const myData = useDataContextStf();
   const { courseName } = useParams();
   const currTime = new Date().getTime();
 
@@ -32,43 +33,16 @@ export default function AnnouncementsList() {
       (a, b) => new Date(a.publish_datetime) - new Date(b.publish_datetime)
     );
 
+
     return (
       <Container>
-        {announcements.map((d) =>
-          currTime - new Date(d.publish_datetime).getTime() >= 0 ? (
-            <Link
-              key={d.id}
-              style={{ textDecoration: "none" }}
-              to={`/student/courses/${courseName}/announcements/${d.id}/entry`}
-            >
-              <Card
-                className={`text-center mb-3 ${
-                  hoveredCard === d.id ? "custom-hover" : ""
-                }`}
-                onMouseOver={() => setHoveredCard(d.id)}
-                onMouseOut={() => setHoveredCard(null)}
-                style={{
-                  transition: "background-color 0.3s",
-                  backgroundColor:
-                    hoveredCard === d.id
-                      ? "rgba(0, 60, 113, 0.2)"
-                      : "rgba(0, 60, 113, 0.05)",
-                  cursor: "pointer",
-                }}
-              >
-                <Card.Body>
-                  <Card.Title as="h1">{d.title}</Card.Title>
-                  <Card.Subtitle>{d.description}</Card.Subtitle>
-                  <Card.Text>ผู้ประกาศ {d.announcer.username}</Card.Text>
-                  <Card.Text>
-                    สามารถเข้าดูได้เมื่อ {formatDate(d.publish_datetime)}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Link>
-          ) : (
+        {announcements.map((d) => (
+          <Link
+            key={d.id}
+            style={{ textDecoration: "none" }}
+            to={`/staff/courses/${courseName}/announcements/${d.id}/entries`}
+          >
             <Card
-              key={d.id}
               className={`text-center mb-3 ${
                 hoveredCard === d.id ? "custom-hover" : ""
               }`}
@@ -76,8 +50,11 @@ export default function AnnouncementsList() {
               onMouseOut={() => setHoveredCard(null)}
               style={{
                 transition: "background-color 0.3s",
-                backgroundColor: "rgba(0, 60, 113, 0.01)",
-                cursor: "not-allowed",
+                backgroundColor:
+                  hoveredCard === d.id
+                    ? "rgba(0, 60, 113, 0.2)"
+                    : "rgba(0, 60, 113, 0.05)",
+                cursor: "pointer",
               }}
             >
               <Card.Body>
@@ -89,8 +66,8 @@ export default function AnnouncementsList() {
                 </Card.Text>
               </Card.Body>
             </Card>
-          )
-        )}
+          </Link>
+        ))}
       </Container>
     );
   } else {

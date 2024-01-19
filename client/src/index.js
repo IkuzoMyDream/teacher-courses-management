@@ -4,34 +4,34 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import StudentPage from "./pages/StudentPage";
-import StaffPage from "./pages/StaffPage";
-import EntryPage from "./pages/EntryPage";
-import AnnouncementsPage from "./pages/AnnouncementsPage";
+// import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import StudentPage from "./pages/std/StudentPage";
+// import StaffPage from "./pages/std/StaffPage";
+// import EntryPage from "./pages/std/EntryPage";
+// import AnnouncementsPage from "./pages/std/AnnouncementsPage";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/student/courses",
-    element: <StudentPage />,
-  },
-  {
-    path: "/student/courses/:courseName/announcements",
-    element: <AnnouncementsPage />,
-  },
-  {
-    path: "/student/courses/:courseName/announcements/:announcementId/entry",
-    element: <EntryPage />,
-  },
-  {
-    path: "/staff",
-    element: <StaffPage />,
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App />,
+//   },
+//   {
+//     path: "/student/courses",
+//     element: <StudentPage />,
+//   },
+//   {
+//     path: "/student/courses/:courseName/announcements",
+//     element: <AnnouncementsPage />,
+//   },
+//   {
+//     path: "/student/courses/:courseName/announcements/:announcementId/entry",
+//     element: <EntryPage />,
+//   },
+//   {
+//     path: "/staff",
+//     element: <StaffPage />,
+//   },
+// ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
