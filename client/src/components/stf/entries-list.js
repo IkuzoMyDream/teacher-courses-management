@@ -5,9 +5,8 @@ import { Table } from "react-bootstrap";
 
 export default function EntriesList() {
   const { announcementId } = useParams();
-  const myData = useDataContextStf();
   const { pathname } = useLocation();
-  const { state } = useLocation();
+  const myData = useDataContextStf();
   const courseName = pathname.split("/")[3];
 
   if (myData) {
@@ -30,5 +29,7 @@ export default function EntriesList() {
         </Table>
       </div>
     );
+  } else {
+    return <div>no entry</div>;
   }
 }

@@ -13,7 +13,7 @@ function EntriesPageStf() {
         <EntriesPost></EntriesPost>
         <EntriesList></EntriesList>
       </DataProviderStf>
-    </div>
+    </div>    
   );
 }
 

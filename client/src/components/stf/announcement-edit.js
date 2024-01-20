@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form, Button, Col, Container, Row, Modal } from "react-bootstrap";
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useDataContextStf } from "../../utils/stf-context";
 
 axios.defaults.baseURL =
@@ -11,6 +11,7 @@ export default function AnnouncementEdit() {
   // prepare source
   const { announcementId } = useParams();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const myData = useDataContextStf();
   const courseName = pathname.split("/")[3];
   const announcement = myData?.courses
@@ -187,6 +188,7 @@ export default function AnnouncementEdit() {
                 onClick={(e) => {
                   e.preventDefault();
                   axios.delete(`/api/announcements/${announcement.id}`);
+                  navigate(-1);
                 }}
               >
                 ลบประกาศ

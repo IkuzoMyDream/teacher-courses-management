@@ -1,7 +1,6 @@
 import { Card, Container } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-// import { useDataContext } from "../../utils/context";
 import { Spin } from "antd";
 import { useDataContextStf } from "../../utils/stf-context";
 
@@ -9,7 +8,6 @@ export default function AnnouncementsList() {
   const [hoveredCard, setHoveredCard] = useState(null);
   const myData = useDataContextStf();
   const { courseName } = useParams();
-  const currTime = new Date().getTime();
 
   const formatDate = (datetime) => {
     const options = {

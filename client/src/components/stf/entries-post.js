@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Form, Button } from "react-bootstrap";
 import { useDataContextStf } from "../../utils/stf-context";
 import * as XLSX from "xlsx";
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 
-export default function EntriesPost() {
+const EntriesPost = () => {
+  const myData = useDataContextStf();
   const [file, setFile] = useState(null);
-  const [maxScore, setMaxScore] = useState(null);
-  const [idS, setIdS] = useState([]);
   const { pathname } = useLocation();
   const { announcementId } = useParams();
-  const myData = useDataContextStf();
+  const courseName = pathname.split("/")[3];
+
+  const entries = myData?.courses
+    .find((d) => d.name?.split(" ")[0] === courseName)
+    .announcements.find((d) => d.id == announcementId)?.entries;
+
   const courseId = myData?.courses?.find(
-    (d) => d.name?.split(" ")[0] == pathname.split("/")[3]
+    (d) => d.name?.split(" ")[0] === pathname.split("/")[3]
   ).id;
 
   const handleFileChange = (event) => {
@@ -21,16 +25,58 @@ export default function EntriesPost() {
     setFile(selectedFile);
   };
 
-  const filtersIds = async () => {
-    const response = await axios.get("/api/users");
-    let idS = {};
-    response?.data
-      .filter((d) => d.email[0].match(/\d/))
-      .forEach((d) => {
-        const std_code = d.email.slice(0, 3);
-        idS[std_code] = d.id;
-      });
-    setIdS(idS);
+  const fetchUserIds = async () => {
+    try {
+      const response = await axios.get("/api/users");
+      return response?.data
+        .filter((d) => d.email[0].match(/\d/))
+        .reduce((acc, d) => {
+          const std_code = d.email.slice(0, 3);
+          acc[std_code] = d.id;
+          return acc;
+        }, {});
+    } catch (error) {
+      console.error("Error fetching user IDs:", error.message);
+      return {};
+    }
+  };
+
+  const uploadEntries = async (jsonData, idS) => {
+    try {
+      await Promise.all(
+        jsonData.slice(1, -1).map(async (d) => {
+          const key = d[0];
+          const score = d[1] + "";
+          const feedback = d[2];
+          await axios.post("/api/entries", {
+            data: {
+              owner: idS[key],
+              score: score,
+              feedback: feedback,
+              course: courseId,
+              announcement: announcementId,
+            },
+          });
+        })
+      );
+    } catch (error) {
+      console.error("Error uploading entries:", error.message);
+    } finally {
+      window.location.reload();
+    }
+  };
+
+  const deleteEntries = async () => {
+    try {
+      await Promise.all(
+        entries.map(async (d) => {
+          await axios.delete(`/api/entries/${d.id}`);
+        })
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting entries:", error.message);
+    }
   };
 
   const handleUpload = async () => {
@@ -38,28 +84,17 @@ export default function EntriesPost() {
       try {
         const reader = new FileReader();
 
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           const workbookData = e.target.result;
           const jsonData = parseExcel(workbookData);
 
           console.log("Converted JSON:", jsonData);
-          setMaxScore(jsonData[0][1].split(" ")[2].replace(/\D/g, ""));
 
-          if (jsonData && idS.length != 0) {
-            jsonData.slice(1, -1).forEach((d) => {
-              const key = d[0];
-              const score = d[1] + "";
-              const feedback = d[2];
-              axios.post("/api/entries", {
-                data: {
-                  owner: idS[key],
-                  score: score,
-                  feedback: feedback,
-                  course: courseId,
-                  announcement: announcementId,
-                },
-              });
-            });
+          if (jsonData) {
+            const idS = await fetchUserIds();
+            if (Object.keys(idS).length !== 0) {
+              await uploadEntries(jsonData, idS);
+            }
           }
         };
 
@@ -84,14 +119,20 @@ export default function EntriesPost() {
     return jsonData;
   };
 
-  useEffect(() => {
-    handleUpload();
-  }, [idS]);
+  if (entries?.length === 0 || !entries) {
+    return (
+      <Container>
+        <Form.Control type="file" onChange={handleFileChange} />
+        <Button onClick={handleUpload}>Upload .xlsx (excel file)</Button>
+      </Container>
+    );
+  } else {
+    return (
+      <Button variant="danger" onClick={deleteEntries}>
+        ลบรายการคะแนน
+      </Button>
+    );
+  }
+};
 
-  return (
-    <Container>
-      <Form.Control type="file" onChange={handleFileChange} />
-      <button onClick={filtersIds}>Upload and Convert</button>
-    </Container>
-  );
-}
+export default EntriesPost;
