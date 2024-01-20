@@ -37,16 +37,10 @@ export default function AnnouncementPost() {
 
   return (
     <Container>
-      <Modal
-        show={showModal}
-        // onHide={() => setShowModal(false)}
-        backdrop="static"
-        keyboard={false}
-      >
+      <Modal show={showModal} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>ท่านแน่ใจว่าต้องการโพสต์ประกาศใช่หรือไม่</Modal.Title>
         </Modal.Header>
-        {/* <Modal.Body>ท่านแน่ใจว่าต้องการโพสต์ประกาศใช่หรือไม่?</Modal.Body> */}
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             ยกเลิก
@@ -68,7 +62,7 @@ export default function AnnouncementPost() {
             <Form.Control
               required
               type="text"
-              placeholder="หัวข้อประกาศ"
+              placeholder="เพิ่มหัวข้อประกาศ"
               onChange={(e) => setTitle(e.target.value)}
             />
           </Col>
@@ -90,7 +84,7 @@ export default function AnnouncementPost() {
             <Form.Control
               required
               type="number"
-              placeholder="คะแนนเต็ม"
+              placeholder="จำนวนคะแนนเต็ม"
               onChange={(e) => setMaxScore(e.target.value)}
             />
           </Col>
@@ -98,7 +92,7 @@ export default function AnnouncementPost() {
             <Form.Label>เวลาประกาศ</Form.Label>
             <Form.Control
               required
-              type="date"
+              type="datetime-local"
               placeholder="เพิ่มรายละเอียด"
               onChange={(e) => setPublishDatetime(e.target.value)}
             />

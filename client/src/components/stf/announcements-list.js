@@ -33,7 +33,6 @@ export default function AnnouncementsList() {
       (a, b) => new Date(a.publish_datetime) - new Date(b.publish_datetime)
     );
 
-
     return (
       <Container>
         {announcements.map((d) => (

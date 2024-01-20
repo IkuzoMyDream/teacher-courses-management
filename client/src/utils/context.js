@@ -3,8 +3,8 @@ import axios from "axios";
 import useLocalState from "./useLocalStorage";
 
 const DataContext = createContext();
-  axios.defaults.baseURL =
-    process.env.REACT_APP_BASE_URL || "http://localhost:1337";
+axios.defaults.baseURL =
+  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
 export const DataProvider = ({ children }) => {
   const [auth, setAuth] = useLocalState(null, "auth");
