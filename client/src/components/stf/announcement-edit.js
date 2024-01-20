@@ -3,6 +3,7 @@ import { Form, Button, Col, Container, Row, Modal } from "react-bootstrap";
 import axios from "axios";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useDataContextStf } from "../../utils/stf-context";
+import AnnouncementDelete from "./announcement-delete";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -25,6 +26,9 @@ export default function AnnouncementEdit() {
     announcement?.publish_datetime
   );
   const [maxScore, setMaxScore] = useState(announcement?.full_score);
+
+  // state for delete
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // editting part
   const [showEditModal, setShowEditModal] = useState(false);
@@ -51,7 +55,6 @@ export default function AnnouncementEdit() {
   if (announcement) {
     return (
       <Container>
-        {/* {"confirm modal"} */}
         <Modal show={showConfirmModal} backdrop="static" keyboard={false}>
           <Modal.Header closeButton>
             <Modal.Title>ท่านแน่ใจว่าต้องการโพสต์ประกาศใช่หรือไม่</Modal.Title>
@@ -182,17 +185,7 @@ export default function AnnouncementEdit() {
               </Button>
             </Col>
             <Col className="col-6">
-              <Button
-                variant="danger"
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  axios.delete(`/api/announcements/${announcement.id}`);
-                  navigate(-1);
-                }}
-              >
-                ลบประกาศ
-              </Button>
+              <AnnouncementDelete></AnnouncementDelete>
             </Col>
           </Row>
         </Form>

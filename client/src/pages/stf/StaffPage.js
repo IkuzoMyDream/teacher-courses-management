@@ -1,12 +1,13 @@
+import { DataProviderStf } from "../../utils/stf-context";
 import StaffNavbar from "../../components/stf/staff-navbar";
 import CoursesList from "../../components/stf/courses-list";
-// import { DataProvider } from "../../utils/context";
-import { DataProviderStf } from "../../utils/stf-context";
+import StaffPath from "../../components/stf/staff-path";
 
 function StaffPage() {
   return (
     <DataProviderStf>
       <StaffNavbar></StaffNavbar>
+      {/* <StaffPath></StaffPath> */}
       <CoursesList></CoursesList>
     </DataProviderStf>
   );

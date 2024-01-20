@@ -4,6 +4,7 @@ import { useDataContextStf } from "../../utils/stf-context";
 import * as XLSX from "xlsx";
 import axios from "axios";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+import EntriesDelete from "./entries-delete";
 
 const EntriesPost = () => {
   const myData = useDataContextStf();
@@ -127,11 +128,7 @@ const EntriesPost = () => {
       </Container>
     );
   } else {
-    return (
-      <Button variant="danger" onClick={deleteEntries}>
-        ลบรายการคะแนน
-      </Button>
-    );
+    return <EntriesDelete></EntriesDelete>;
   }
 };
 
