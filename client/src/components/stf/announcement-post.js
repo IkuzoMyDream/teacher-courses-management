@@ -98,7 +98,7 @@ export default function AnnouncementPost() {
             />
           </Col>
         </Row>
-        <Row className="text-center">
+        <Row className="text-center mb-3">
           <Col>
             <Button variant="primary" type="submit">
               ยืนยัน

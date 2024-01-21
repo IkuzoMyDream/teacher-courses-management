@@ -140,14 +140,22 @@ const EntriesPost = () => {
     if (entries?.length === 0 || !entries) {
       return (
         <Container>
-          <Modal show={showConfirmPostModal} backdrop="static" keyboard={false} size="lg">
+          <Modal
+            show={showConfirmPostModal}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+          >
             <Modal.Header closeButton>
               <Modal.Title>ตัวอย่างไฟล์ที่ถูกต้อง</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <ul>
                 <li>ต้องเป็นไฟล์นามสกุล .xlsx เท่านั้น</li>
-                <li>คอลัมน์ (1, 2, 3) ต้องเป็น (รหัสนักศึกษา, คะแนน, คอมเม้นต์) ตามลำดับ</li>
+                <li>
+                  คอลัมน์ (1, 2, 3) ต้องเป็น (รหัสนักศึกษา, คะแนน, คอมเม้นต์)
+                  ตามลำดับ
+                </li>
                 <li>เริ่มใส่รายการจากแถวที่ 2 เป็นต้นไป</li>
               </ul>
               <Image

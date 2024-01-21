@@ -4,15 +4,16 @@ import { Link, useParams } from "react-router-dom";
 import { Spin } from "antd";
 import { useDataContextStf } from "../../utils/stf-context";
 
-export default function AnnouncementsList() {
+export default function AnnouncementsList({ filter, filterSort }) {
   const [hoveredCard, setHoveredCard] = useState(null);
   const myData = useDataContextStf();
   const { courseName } = useParams();
+  const userId = myData?.id;
 
   const formatDate = (datetime) => {
     const options = {
       day: "numeric",
-      month: "short",
+      month: "numeric",
       year: "numeric",
       hour: "numeric",
       minute: "numeric",
@@ -23,13 +24,23 @@ export default function AnnouncementsList() {
   };
 
   if (myData) {
-    const findCourse = myData.courses.find(
+    let announcements = myData.courses.find(
       (course) => course.name.split(" ")[0] === courseName
-    );
-    const announcements = findCourse.announcements;
-    announcements.sort(
-      (a, b) => new Date(a.publish_datetime) - new Date(b.publish_datetime)
-    );
+    ).announcements;
+
+    if (filter === "ประกาศของฉัน") {
+      announcements = announcements.filter((d) => d.announcer.id === userId);
+    }
+
+    if (filterSort === "ประกาศล่าสุด") {
+      announcements = announcements.sort(
+        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt)
+      );
+    } else {
+      announcements = announcements.sort(
+        (a, b) => new Date(a.publish_datetime) - new Date(b.publish_datetime)
+      );
+    }
 
     return (
       <Container>
@@ -57,10 +68,11 @@ export default function AnnouncementsList() {
               <Card.Body>
                 <Card.Title as="h1">{d.title}</Card.Title>
                 <Card.Subtitle>{d.description}</Card.Subtitle>
-                <Card.Text>ผู้ประกาศ {d.announcer.username}</Card.Text>
                 <Card.Text>
                   นักศึกษาสามารถเข้าดูได้เมื่อ {formatDate(d.publish_datetime)}
                 </Card.Text>
+                <Card.Text>ผู้ประกาศ {d.announcer.username}</Card.Text>
+                <Card.Text>ประกาศเมื่อ {formatDate(d.publishedAt)}</Card.Text>
               </Card.Body>
             </Card>
           </Link>
