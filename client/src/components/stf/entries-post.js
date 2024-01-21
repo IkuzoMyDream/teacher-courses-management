@@ -12,6 +12,12 @@ const EntriesPost = () => {
   const { pathname } = useLocation();
   const { announcementId } = useParams();
   const courseName = pathname.split("/")[3];
+  const announcement = myData?.courses
+    .find((d) => d.name?.split(" ")[0] == courseName)
+    .announcements?.find((d) => d.id == announcementId);
+  const announcementOwnerId = announcement?.announcer?.id;
+
+  const userId = myData?.id;
 
   const entries = myData?.courses
     .find((d) => d.name?.split(" ")[0] === courseName)
@@ -120,15 +126,17 @@ const EntriesPost = () => {
     return jsonData;
   };
 
-  if (entries?.length === 0 || !entries) {
-    return (
-      <Container>
-        <Form.Control type="file" onChange={handleFileChange} />
-        <Button onClick={handleUpload}>Upload .xlsx (excel file)</Button>
-      </Container>
-    );
-  } else {
-    return <EntriesDelete></EntriesDelete>;
+  if (announcementOwnerId === userId) {
+    if (entries?.length === 0 || !entries) {
+      return (
+        <Container>
+          <Form.Control type="file" onChange={handleFileChange} />
+          <Button onClick={handleUpload}>Upload .xlsx (excel file)</Button>
+        </Container>
+      );
+    } else {
+      return <EntriesDelete></EntriesDelete>;
+    }
   }
 };
 

@@ -38,7 +38,10 @@ export default function AnnouncementsList() {
             key={d.id}
             style={{ textDecoration: "none" }}
             to={`/staff/courses/${courseName}/announcements/${d.id}/entries`}
-            state={{ announcementTitle: d.title }}
+            state={{
+              announcementTitle: d.title,
+              announcementOwnerId: d.announcer.id,
+            }}
           >
             <Card
               className={`text-center mb-3 ${

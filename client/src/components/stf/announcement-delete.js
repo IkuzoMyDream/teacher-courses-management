@@ -23,7 +23,6 @@ export default function AnnouncementDelete(props) {
           await axios.delete(`/api/entries/${d.id}`);
         })
       );
-      window.location.reload();
     } catch (error) {
       console.error("Error deleting entries:", error.message);
     }
@@ -31,6 +30,7 @@ export default function AnnouncementDelete(props) {
   return (
     <>
       <Button
+        disabled={props?.userId == props?.announcementOwnerId ? false : true}
         variant="danger"
         type="button"
         onClick={() => setShowDeleteModal1(true)}
@@ -40,7 +40,7 @@ export default function AnnouncementDelete(props) {
       <Modal show={showDeleteModal1} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>
-            การลบประกาศจะทำให้ข้อมูลรายการทั้งหมดหายตามไปด้วย
+            การลบประกาศจะทำให้ข้อมูลรายการคะแนนทั้งหมดหายตามไปด้วย
           </Modal.Title>
         </Modal.Header>
         <Modal.Footer>

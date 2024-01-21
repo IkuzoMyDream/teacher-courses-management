@@ -1,7 +1,7 @@
 import { Card, Container } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useDataContext } from "../../utils/context";
+import { useDataContext } from "../../utils/std-context";
 import { Spin } from "antd";
 
 export default function AnnouncementsList() {

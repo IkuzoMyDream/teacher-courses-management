@@ -1,12 +1,15 @@
 import { Button, Container, Nav, Navbar, Image } from "react-bootstrap";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
+import { useDataContextStf } from "../../utils/stf-context";
 
 export default function StaffNavbar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { state } = useLocation();
   const courseName = pathname.split("/")[3];
+  const myData = useDataContextStf();
+  const username = myData?.username;
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -50,9 +53,19 @@ export default function StaffNavbar() {
           <Nav.Item>
             <h1 style={{ color: "white" }}>ระบบประกาศคะแนนนักศึกษา (Admin)</h1>
           </Nav.Item>
-          <Button onClick={handleLogout} variant="danger">
-            Logout
-          </Button>
+          <Nav.Item>
+            <Nav.Item>
+              <p style={{ color: "white", margin: 0, fontSize: "small" }}>
+                {username}
+              </p>
+              <p style={{ color: "white", margin: 0, fontSize: "small" }}>
+                (admin)
+              </p>
+            </Nav.Item>
+            <Button onClick={handleLogout} variant="danger">
+              Logout
+            </Button>
+          </Nav.Item>
         </Container>
       </Navbar>
       <Container>

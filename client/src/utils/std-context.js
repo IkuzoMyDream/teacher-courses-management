@@ -6,7 +6,7 @@ const DataContext = createContext();
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
-export const DataProvider = ({ children }) => {
+export const DataProviderStd = ({ children }) => {
   const [auth, setAuth] = useLocalState(null, "auth");
 
   const [myData, setMyData] = useState(null);

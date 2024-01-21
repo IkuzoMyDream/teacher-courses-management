@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useDataContext } from "../../utils/context";
+import { useDataContext } from "../../utils/std-context";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
 import { Chart } from "chart.js/auto";

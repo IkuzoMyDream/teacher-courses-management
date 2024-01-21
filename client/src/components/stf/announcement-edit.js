@@ -12,12 +12,14 @@ export default function AnnouncementEdit() {
   // prepare source
   const { announcementId } = useParams();
   const { pathname } = useLocation();
+  const { state } = useLocation();
   const navigate = useNavigate();
   const myData = useDataContextStf();
   const courseName = pathname.split("/")[3];
   const announcement = myData?.courses
     .find((d) => d.name?.split(" ")[0] == courseName)
     .announcements?.find((d) => d.id == announcementId);
+  const announcementOwnerId = announcement?.announcer?.id;
 
   // state for edit
   const [title, setTitle] = useState(announcement?.title);
@@ -26,9 +28,6 @@ export default function AnnouncementEdit() {
     announcement?.publish_datetime
   );
   const [maxScore, setMaxScore] = useState(announcement?.full_score);
-
-  // state for delete
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // editting part
   const [showEditModal, setShowEditModal] = useState(false);
@@ -171,9 +170,20 @@ export default function AnnouncementEdit() {
               />
             </Col>
           </Row>
+          <Row className="mb-3">
+            <Col sm={{ span: 6, offset: 3 }}>
+              <Form.Label className="text-center">ผู้ประกาศ</Form.Label>
+              <Form.Control
+                disabled
+                type="text"
+                value={announcement?.announcer?.username}
+              />
+            </Col>
+          </Row>
           <Row className="text-center">
             <Col className="col-6">
               <Button
+                disabled={userId === announcementOwnerId ? false : true}
                 variant="primary"
                 type="button"
                 onClick={(e) => {
@@ -185,7 +195,10 @@ export default function AnnouncementEdit() {
               </Button>
             </Col>
             <Col className="col-6">
-              <AnnouncementDelete></AnnouncementDelete>
+              <AnnouncementDelete
+                announcementOwnerId={announcementOwnerId}
+                userId={userId}
+              ></AnnouncementDelete>
             </Col>
           </Row>
         </Form>
