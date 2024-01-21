@@ -68,7 +68,7 @@ export default function AnnouncementEdit() {
               ยืนยัน
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal>  
 
         {/* {"edit modal"} */}
         <Modal show={showEditModal} backdrop="static" keyboard={false}>

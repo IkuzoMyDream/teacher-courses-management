@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  Row,
+  Col,
+  Modal,
+  Image,
+} from "react-bootstrap";
 import { useDataContextStf } from "../../utils/stf-context";
 import * as XLSX from "xlsx";
 import axios from "axios";
@@ -11,6 +19,7 @@ const EntriesPost = () => {
   const [file, setFile] = useState(null);
   const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [showConfirmPostModal, setShowConfirmModal] = useState(false);
   const announcementId = searchParams.get("id");
   const courseName = pathname.split("/")[3];
   const announcement = myData?.courses
@@ -131,6 +140,33 @@ const EntriesPost = () => {
     if (entries?.length === 0 || !entries) {
       return (
         <Container>
+          <Modal show={showConfirmPostModal} backdrop="static" keyboard={false} size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>ตัวอย่างไฟล์ที่ถูกต้อง</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ul>
+                <li>ต้องเป็นไฟล์นามสกุล .xlsx เท่านั้น</li>
+                <li>คอลัมน์ (1, 2, 3) ต้องเป็น (รหัสนักศึกษา, คะแนน, คอมเม้นต์) ตามลำดับ</li>
+                <li>เริ่มใส่รายการจากแถวที่ 2 เป็นต้นไป</li>
+              </ul>
+              <Image
+                src={"/entries-post-example.jpg"}
+                style={{ width: "100%" }}
+              ></Image>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                type="button"
+                onClick={() => {
+                  setShowConfirmModal(false);
+                }}
+              >
+                รับทราบ
+              </Button>
+            </Modal.Footer>
+          </Modal>
           <Form
             onSubmit={(e) => {
               e.preventDefault();
@@ -139,6 +175,14 @@ const EntriesPost = () => {
           >
             <Row className="mb-3">
               <Col sm={{ span: 6, offset: 3 }}>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => setShowConfirmModal(true)}
+                >
+                  ตัวอย่าง
+                </Button>
                 <Form.Control
                   type="file"
                   onChange={handleFileChange}
