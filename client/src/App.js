@@ -53,18 +53,17 @@ function App() {
             />
           }
         >
-          <Route element={<StaffNavbar></StaffNavbar>} path="*"></Route>
           <Route
             element={<StaffPage></StaffPage>}
             path="/staff/courses"
           ></Route>
           <Route
             element={<AnnouncementsPageStf />}
-            path="/staff/courses/:courseName/announcements"
+            path="/staff/courses/:courseName"
           ></Route>
           <Route
             element={<EntriesPageStf />}
-            path="/staff/courses/:courseName/announcements/:announcementId/entries"
+            path="/staff/courses/:courseName/:announcementTitle"
           ></Route>
         </Route>
         <Route element={<LoginPage />} path="/"></Route>

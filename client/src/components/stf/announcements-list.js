@@ -37,11 +37,7 @@ export default function AnnouncementsList() {
           <Link
             key={d.id}
             style={{ textDecoration: "none" }}
-            to={`/staff/courses/${courseName}/announcements/${d.id}/entries`}
-            state={{
-              announcementTitle: d.title,
-              announcementOwnerId: d.announcer.id,
-            }}
+            to={`/staff/courses/${courseName}/${d.title}?id=${d.id}`}
           >
             <Card
               className={`text-center mb-3 ${
@@ -63,7 +59,7 @@ export default function AnnouncementsList() {
                 <Card.Subtitle>{d.description}</Card.Subtitle>
                 <Card.Text>ผู้ประกาศ {d.announcer.username}</Card.Text>
                 <Card.Text>
-                  สามารถเข้าดูได้เมื่อ {formatDate(d.publish_datetime)}
+                  นักศึกษาสามารถเข้าดูได้เมื่อ {formatDate(d.publish_datetime)}
                 </Card.Text>
               </Card.Body>
             </Card>

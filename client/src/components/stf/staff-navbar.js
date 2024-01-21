@@ -1,15 +1,21 @@
 import { Button, Container, Nav, Navbar, Image } from "react-bootstrap";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  Link,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import axios from "axios";
 import { useDataContextStf } from "../../utils/stf-context";
 
 export default function StaffNavbar() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { state } = useLocation();
-  const courseName = pathname.split("/")[3];
   const myData = useDataContextStf();
+  const { pathname } = useLocation();
+  const { announcementTitle } = useParams();
+  const courseName = pathname.split("/")[3];
   const username = myData?.username;
+  const navigate = useNavigate();
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -73,7 +79,7 @@ export default function StaffNavbar() {
           switch (pathname.split("/").length) {
             case 3:
               return <p>รายวิชา</p>;
-            case 5:
+            case 4:
               return (
                 <p>
                   <Link
@@ -85,7 +91,7 @@ export default function StaffNavbar() {
                   &nbsp;&nbsp;/&nbsp;&nbsp;{courseName}
                 </p>
               );
-            case 7:
+            case 5:
               return (
                 <p>
                   <Link
@@ -97,11 +103,11 @@ export default function StaffNavbar() {
                   &nbsp;&nbsp;/&nbsp;&nbsp;
                   <Link
                     style={{ textDecoration: "none" }}
-                    to={`/staff/courses/${courseName}/announcements`}
+                    to={`/staff/courses/${courseName}`}
                   >
                     {courseName}&nbsp;&nbsp;
                   </Link>
-                  /&nbsp;&nbsp;{state.announcementTitle}
+                  /&nbsp;&nbsp;{announcementTitle}
                 </p>
               );
             default:

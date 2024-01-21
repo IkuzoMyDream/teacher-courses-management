@@ -1,5 +1,10 @@
 import { Modal, Button } from "react-bootstrap";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useDataContextStf } from "../../utils/stf-context";
@@ -8,7 +13,8 @@ export default function AnnouncementDelete(props) {
   const myData = useDataContextStf();
   const { pathname } = useLocation();
   const courseName = pathname.split("/")[3];
-  const { announcementId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const announcementId = searchParams.get("id");
   const [showDeleteModal1, setShowDeleteModal1] = useState(props.isOpen);
   const [showDeleteModal2, setShowDeleteModal2] = useState(false);
   const navigate = useNavigate();

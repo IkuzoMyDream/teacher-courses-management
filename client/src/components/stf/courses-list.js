@@ -20,7 +20,7 @@ export default function CoursesList(props) {
             <div className="col-md-6" key={d.id}>
               <Link
                 style={{ textDecoration: "none" }}
-                to={`/staff/courses/${d.name.split(" ")[0]}/announcements`}
+                to={`/staff/courses/${d.name.split(" ")[0]}`}
               >
                 <Card
                   className="mb-3"

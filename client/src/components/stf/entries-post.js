@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useDataContextStf } from "../../utils/stf-context";
 import * as XLSX from "xlsx";
 import axios from "axios";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import EntriesDelete from "./entries-delete";
 
 const EntriesPost = () => {
   const myData = useDataContextStf();
   const [file, setFile] = useState(null);
   const { pathname } = useLocation();
-  const { announcementId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const announcementId = searchParams.get("id");
   const courseName = pathname.split("/")[3];
   const announcement = myData?.courses
     .find((d) => d.name?.split(" ")[0] == courseName)
@@ -86,7 +87,7 @@ const EntriesPost = () => {
     }
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e) => {
     if (file) {
       try {
         const reader = new FileReader();
@@ -130,8 +131,24 @@ const EntriesPost = () => {
     if (entries?.length === 0 || !entries) {
       return (
         <Container>
-          <Form.Control type="file" onChange={handleFileChange} />
-          <Button onClick={handleUpload}>Upload .xlsx (excel file)</Button>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleUpload();
+            }}
+          >
+            <Row className="mb-3">
+              <Col sm={{ span: 6, offset: 3 }}>
+                <Form.Control
+                  type="file"
+                  onChange={handleFileChange}
+                ></Form.Control>
+                <Button type="submit" size="sm" variant="secondary">
+                  Upload
+                </Button>
+              </Col>
+            </Row>
+          </Form>
         </Container>
       );
     } else {

@@ -1,5 +1,5 @@
-import { Button, Modal } from "react-bootstrap";
-import { useLocation, useParams } from "react-router-dom";
+import { Button, Container, Modal } from "react-bootstrap";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useDataContextStf } from "../../utils/stf-context";
 import axios from "axios";
 import { useState } from "react";
@@ -7,7 +7,8 @@ import { useState } from "react";
 export default function EntriesDelete() {
   const myData = useDataContextStf();
   const { pathname } = useLocation();
-  const { announcementId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const announcementId = searchParams.get("id");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const courseName = pathname.split("/")[3];
   const entries = myData?.courses
@@ -27,7 +28,7 @@ export default function EntriesDelete() {
     }
   };
   return (
-    <>
+    <Container className="text-center">
       <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
         ลบรายการคะแนน
       </Button>
@@ -44,6 +45,6 @@ export default function EntriesDelete() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </Container>
   );
 }

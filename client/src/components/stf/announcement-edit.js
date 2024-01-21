@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form, Button, Col, Container, Row, Modal } from "react-bootstrap";
 import axios from "axios";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useDataContextStf } from "../../utils/stf-context";
 import AnnouncementDelete from "./announcement-delete";
 
@@ -10,10 +10,9 @@ axios.defaults.baseURL =
 
 export default function AnnouncementEdit() {
   // prepare source
-  const { announcementId } = useParams();
   const { pathname } = useLocation();
-  const { state } = useLocation();
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const announcementId = searchParams.get("id");
   const myData = useDataContextStf();
   const courseName = pathname.split("/")[3];
   const announcement = myData?.courses
@@ -180,7 +179,7 @@ export default function AnnouncementEdit() {
               />
             </Col>
           </Row>
-          <Row className="text-center">
+          <Row className="text-center mb-3">
             <Col className="col-6">
               <Button
                 disabled={userId === announcementOwnerId ? false : true}
