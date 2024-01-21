@@ -89,7 +89,7 @@ export default function AnnouncementPost() {
             />
           </Col>
           <Col sm="6">
-            <Form.Label>เวลาประกาศ</Form.Label>
+            <Form.Label>วัน-เวลาเผยแพร่ประกาศ</Form.Label>
             <Form.Control
               required
               type="datetime-local"

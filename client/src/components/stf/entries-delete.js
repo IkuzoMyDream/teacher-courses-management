@@ -29,7 +29,7 @@ export default function EntriesDelete() {
   };
   return (
     <Container className="text-center">
-      <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+      <Button variant="danger" onClick={() => setShowDeleteModal(true)} size="sm">
         ลบรายการคะแนน
       </Button>
       <Modal show={showDeleteModal} backdrop="static" keyboard={false}>

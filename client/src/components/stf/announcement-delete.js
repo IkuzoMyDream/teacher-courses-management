@@ -40,6 +40,7 @@ export default function AnnouncementDelete(props) {
         variant="danger"
         type="button"
         onClick={() => setShowDeleteModal1(true)}
+        size="sm"
       >
         ลบประกาศ
       </Button>

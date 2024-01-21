@@ -1,16 +1,24 @@
 // AnnouncementFilter.js
 
-import React from "react";
-import { Col, Container, Dropdown, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Col,
+  Container,
+  Dropdown,
+  Form,
+  InputGroup,
+  Row,
+} from "react-bootstrap";
 
-export default function AnnouncementFilter({
+export default function AnnouncementsFilter({
   filter,
   setFilter,
   filterSort,
   setFilterSort,
+  setSearch,
 }) {
   return (
-    <Container>
+    <Container className="mb-3">
       <Row>
         <Col>
           <Dropdown>
@@ -27,6 +35,16 @@ export default function AnnouncementFilter({
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+        </Col>
+        <Col>
+          <Form>
+            <InputGroup>
+              <Form.Control
+                placeholder="ค้นหาประกาศ"
+                onChange={(e) => setSearch(e.target.value)}
+              ></Form.Control>
+            </InputGroup>
+          </Form>
         </Col>
         <Col className="d-flex justify-content-end">
           <Dropdown>

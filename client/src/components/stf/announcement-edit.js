@@ -26,7 +26,7 @@ export default function AnnouncementEdit() {
   const [publishDatetime, setPublishDatetime] = useState(
     announcement?.publish_datetime
   );
-  const [maxScore, setMaxScore] = useState(announcement?.full_score);
+  const [maxScore, setMaxScore] = useState(0);
 
   // editting part
   const [showEditModal, setShowEditModal] = useState(false);
@@ -35,6 +35,19 @@ export default function AnnouncementEdit() {
     (d) => d.name?.split(" ")[0] == pathname.split("/")[3]
   ).id;
   const userId = myData?.id;
+
+  const formatDate = (datetime) => {
+    const options = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZone: "Asia/Bangkok",
+    };
+    return new Intl.DateTimeFormat("en-GB", options).format(new Date(datetime));
+  };
 
   const handleSubmit = async (e) => {
     const response = await axios.put(`/api/announcements/${announcement.id}`, {
@@ -68,7 +81,7 @@ export default function AnnouncementEdit() {
               ยืนยัน
             </Button>
           </Modal.Footer>
-        </Modal>  
+        </Modal>
 
         {/* {"edit modal"} */}
         <Modal show={showEditModal} backdrop="static" keyboard={false}>
@@ -107,10 +120,10 @@ export default function AnnouncementEdit() {
                   />
                 </Col>
                 <Col sm="6">
-                  <Form.Label>เวลาประกาศ</Form.Label>
+                  <Form.Label>วัน-เวลาเผยแพร่ประกาศ</Form.Label>
                   <Form.Control
                     type="datetime-local"
-                    placeholder={announcement?.publish_datetime}
+                    placeholder={formatDate(announcement?.publish_datetime)}
                     onChange={(e) => setPublishDatetime(e.target.value)}
                   />
                 </Col>
@@ -161,11 +174,11 @@ export default function AnnouncementEdit() {
               />
             </Col>
             <Col sm="6">
-              <Form.Label>เวลาประกาศ</Form.Label>
+              <Form.Label>วัน-เวลาเผยแพร่ประกาศ</Form.Label>
               <Form.Control
                 disabled
                 type="text"
-                value={announcement?.publish_datetime}
+                value={formatDate(announcement?.publish_datetime)}
               />
             </Col>
           </Row>
@@ -189,6 +202,7 @@ export default function AnnouncementEdit() {
                   e.preventDefault();
                   setShowEditModal(true);
                 }}
+                size="sm"
               >
                 แก้ไขประกาศ
               </Button>
