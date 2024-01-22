@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Spin } from "antd";
 import CoursesList from "../../components/std/courses-list";
-import StudentNavbar from "../../components/std/student-navbar";
-import { DataProvider } from "../../utils/std-context";
+import CoursesFilter from "../../components/std/courses-filter";
 
 function StudentPage() {
-  return <CoursesList></CoursesList>;
+  const [search, setSearch] = useState("");
+  const [isSpin, setIsSpin] = useState(true);
+  return (
+    <Spin spinning={isSpin}>
+      <CoursesFilter setSearch={setSearch}></CoursesFilter>
+      <CoursesList search={search} setIsSpin={setIsSpin}></CoursesList>
+    </Spin>
+  );
 }
 
 export default StudentPage;

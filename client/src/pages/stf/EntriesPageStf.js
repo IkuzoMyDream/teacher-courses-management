@@ -4,12 +4,14 @@ import EntriesPost from "../../components/stf/entries-post";
 import { Container, Dropdown } from "react-bootstrap";
 import { useState } from "react";
 import EntriesGraph from "../../components/stf/entries-graph";
+import { Spin } from "antd";
 
 function EntriesPageStf() {
   const [filterShow, setFilterShow] = useState("ตาราง");
   const [entries, setEntries] = useState([]);
+  const [isSpin, setIsSpin] = useState(true);
   return (
-    <>
+    <Spin spinning={isSpin}>
       <AnnouncementEdit></AnnouncementEdit>
       <Container className="text-center mb-3">
         <Dropdown>
@@ -28,13 +30,16 @@ function EntriesPageStf() {
         </Dropdown>
       </Container>
       {filterShow === "ตาราง" ? (
-        <EntriesList setEntries={setEntries}></EntriesList>
+        <EntriesList
+          setEntries={setEntries}
+          setIsSpin={setIsSpin}
+        ></EntriesList>
       ) : (
         <EntriesGraph entries={entries}></EntriesGraph>
       )}
 
       <EntriesPost></EntriesPost>
-    </>
+    </Spin>
   );
 }
 

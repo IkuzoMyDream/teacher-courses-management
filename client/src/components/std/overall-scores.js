@@ -1,16 +1,18 @@
-import { useParams } from "react-router-dom";
-import { useDataContext } from "../../utils/std-context";
+import { useSearchParams } from "react-router-dom";
+import { useDataContextStd } from "../../utils/std-context";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
 import { Chart } from "chart.js/auto";
 import { useEffect, useState } from "react";
 import useLocalState from "../../utils/useLocalStorage";
 import { Spin } from "antd";
+import { Container } from "react-bootstrap";
 
 export default function OverallScores() {
-  const myData = useDataContext();
+  const myData = useDataContextStd();
   const [auth, setAuth] = useLocalState(null, "auth");
-  const { announcementId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const announcementId = searchParams.get("id");
   const [overallScores, setOverallScores] = useState([0, 0, 0, 0, 0]);
   const [labels, setLabels] = useState([1, 2, 3, 4, 5]);
 
@@ -66,14 +68,14 @@ export default function OverallScores() {
 
   if (myData && overallScores && labels) {
     return (
-      <Bar
-        data={{
-          labels: labels,
-          datasets: [{ label: "Student", data: overallScores }],
-        }}
-      ></Bar>
+      <Container>
+        <Bar
+          data={{
+            labels: labels,
+            datasets: [{ label: "Student", data: overallScores }],
+          }}
+        ></Bar>
+      </Container>
     );
-  } else {
-    return <Spin></Spin>;
   }
 }

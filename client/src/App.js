@@ -37,11 +37,11 @@ function App() {
           ></Route>
           <Route
             element={<AnnouncementsPageStd />}
-            path="/student/courses/:courseName/announcements"
+            path="/student/courses/:courseName"
           ></Route>
           <Route
             element={<EntryPage />}
-            path="/student/courses/:courseName/announcements/:announcementId/entry"
+            path="/student/courses/:courseName/:announcementTitle"
           ></Route>
         </Route>
         <Route

@@ -2,7 +2,7 @@ import { useDataContextStf } from "../../utils/stf-context";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Container, Table } from "react-bootstrap";
 
-export default function EntriesList({ setEntries }) {
+export default function EntriesList({ setEntries, setIsSpin }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const announcementId = searchParams.get("id");
   const { pathname } = useLocation();
@@ -27,6 +27,7 @@ export default function EntriesList({ setEntries }) {
       .find((d) => d.name?.split(" ")[0] == courseName)
       .announcements?.find((d) => d.id == announcementId)?.entries;
     setEntries(entries);
+    setIsSpin(false);
 
     if (entries.length !== 0) {
       return (

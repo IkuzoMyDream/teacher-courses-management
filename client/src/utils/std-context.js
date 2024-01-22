@@ -35,4 +35,4 @@ export const DataProviderStd = ({ children }) => {
   return <DataContext.Provider value={myData}>{children}</DataContext.Provider>;
 };
 
-export const useDataContext = () => useContext(DataContext);
+export const useDataContextStd = () => useContext(DataContext);

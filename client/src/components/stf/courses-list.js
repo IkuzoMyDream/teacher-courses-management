@@ -1,11 +1,9 @@
 import { Card, Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import { useDataContext } from "../../utils/context";
-import { Spin } from "antd";
 import { useDataContextStf } from "../../utils/stf-context";
 
-export default function CoursesList({ search }) {
+export default function CoursesList({ search, setIsSpin }) {
   const [hoveredCard, setHoveredCard] = useState(null);
   const myData = useDataContextStf();
 
@@ -13,6 +11,7 @@ export default function CoursesList({ search }) {
     myData.courses.sort(
       (a, b) => b.announcements.length - a.announcements.length
     );
+    setIsSpin(false);
     return (
       <Container>
         <div className="row">
@@ -60,7 +59,5 @@ export default function CoursesList({ search }) {
         </div>
       </Container>
     );
-  } else {
-    return <Spin></Spin>;
   }
 }

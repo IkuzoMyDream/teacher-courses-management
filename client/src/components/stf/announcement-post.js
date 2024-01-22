@@ -36,76 +36,78 @@ export default function AnnouncementPost() {
   };
 
   return (
-    <Container>
-      <Modal show={showModal} backdrop="static" keyboard={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>ท่านแน่ใจว่าต้องการโพสต์ประกาศใช่หรือไม่</Modal.Title>
-        </Modal.Header>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            ยกเลิก
-          </Button>
-          <Button variant="primary" type="button" onClick={handleSubmit}>
-            ยืนยัน
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setShowModal(true);
-        }}
-      >
-        <Row className="mb-3">
-          <Col sm={{ span: 6, offset: 3 }}>
-            <Form.Label className="text-center">หัวข้อ</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="เพิ่มหัวข้อประกาศ"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col sm={{ span: 6, offset: 3 }}>
-            <Form.Label className="text-center">รายละเอียด</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="เพิ่มรายละเอียด"
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col sm="6">
-            <Form.Label>คะแนนเต็ม</Form.Label>
-            <Form.Control
-              required
-              type="number"
-              placeholder="จำนวนคะแนนเต็ม"
-              onChange={(e) => setMaxScore(e.target.value)}
-            />
-          </Col>
-          <Col sm="6">
-            <Form.Label>วัน-เวลาเผยแพร่ประกาศ</Form.Label>
-            <Form.Control
-              required
-              type="datetime-local"
-              placeholder="เพิ่มรายละเอียด"
-              onChange={(e) => setPublishDatetime(e.target.value)}
-            />
-          </Col>
-        </Row>
-        <Row className="text-center mb-3">
-          <Col>
-            <Button variant="primary" type="submit">
+    <>
+      <Container>
+        <Modal show={showModal} backdrop="static" keyboard={false}>
+          <Modal.Header closeButton>
+            <Modal.Title>ท่านแน่ใจว่าต้องการโพสต์ประกาศใช่หรือไม่</Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              ยกเลิก
+            </Button>
+            <Button variant="primary" type="button" onClick={handleSubmit}>
               ยืนยัน
             </Button>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
+          </Modal.Footer>
+        </Modal>
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setShowModal(true);
+          }}
+        >
+          <Row className="mb-3">
+            <Col sm={{ span: 6, offset: 3 }}>
+              <Form.Label className="text-center">หัวข้อ</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="เพิ่มหัวข้อประกาศ"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col sm={{ span: 6, offset: 3 }}>
+              <Form.Label className="text-center">รายละเอียด</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="เพิ่มรายละเอียด"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col sm="6">
+              <Form.Label>คะแนนเต็ม</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="จำนวนคะแนนเต็ม"
+                onChange={(e) => setMaxScore(e.target.value)}
+              />
+            </Col>
+            <Col sm="6">
+              <Form.Label>วัน-เวลาเผยแพร่ประกาศ</Form.Label>
+              <Form.Control
+                required
+                type="datetime-local"
+                placeholder="เพิ่มรายละเอียด"
+                onChange={(e) => setPublishDatetime(e.target.value)}
+              />
+            </Col>
+          </Row>
+          <Row className="text-center mb-3">
+            <Col>
+              <Button variant="primary" type="submit">
+                ยืนยัน
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Container>
+    </>
   );
 }

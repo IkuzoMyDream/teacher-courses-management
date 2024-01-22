@@ -4,7 +4,12 @@ import { Link, useParams } from "react-router-dom";
 import { Spin } from "antd";
 import { useDataContextStf } from "../../utils/stf-context";
 
-export default function AnnouncementsList({ filter, filterSort, search }) {
+export default function AnnouncementsList({
+  filter,
+  filterSort,
+  search,
+  setIsSpin,
+}) {
   const [hoveredCard, setHoveredCard] = useState(null);
   const myData = useDataContextStf();
   const { courseName } = useParams();
@@ -43,6 +48,7 @@ export default function AnnouncementsList({ filter, filterSort, search }) {
     }
 
     if (announcements.length !== 0) {
+      setIsSpin(false);
       return (
         <Container>
           {announcements
@@ -82,7 +88,8 @@ export default function AnnouncementsList({ filter, filterSort, search }) {
                       {formatDate(d.publish_datetime)}
                     </Card.Text>
                     <Card.Text>
-                      วันที่สร้างประกาศ {formatDate(d.publishedAt).split(",")[0]}
+                      วันที่สร้างประกาศ{" "}
+                      {formatDate(d.publishedAt).split(",")[0]}
                     </Card.Text>
                     <Card.Text>ผู้ประกาศ {d.announcer.username}</Card.Text>
                   </Card.Body>
@@ -92,13 +99,12 @@ export default function AnnouncementsList({ filter, filterSort, search }) {
         </Container>
       );
     } else {
+      setIsSpin(false);
       return (
         <Container>
           <h1 className="text-center">ไม่มีประกาศ</h1>
         </Container>
       );
     }
-  } else {
-    return <Spin></Spin>;
   }
 }
