@@ -2,7 +2,6 @@ import { Card, Container } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDataContextStd } from "../../utils/std-context";
-import { Spin } from "antd";
 
 export default function AnnouncementsList({ filterSort, search, setIsSpin }) {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -26,25 +25,25 @@ export default function AnnouncementsList({ filterSort, search, setIsSpin }) {
   if (myData) {
     let announcements = myData.courses.find(
       (course) => course.name.split(" ")[0] === courseName
-    ).announcements;
+    )?.announcements;
 
     if (filterSort === "ประกาศล่าสุด") {
-      announcements = announcements.sort(
+      announcements = announcements?.sort(
         (a, b) =>
           new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
       );
     } else {
-      announcements = announcements.filter(
+      announcements = announcements?.filter(
         (d) => currTime - new Date(d.publish_datetime).getTime() <= 0
       );
-      announcements = announcements.sort(
+      announcements = announcements?.sort(
         (a, b) =>
           new Date(a.publish_datetime).getTime() -
           new Date(b.publish_datetime).getTime()
       );
     }
 
-    if (announcements.length !== 0) {
+    if (announcements?.length !== 0 && announcements) {
       setIsSpin(false);
       return (
         <Container>
@@ -128,6 +127,7 @@ export default function AnnouncementsList({ filterSort, search, setIsSpin }) {
       );
     } else {
       setIsSpin(false);
+
       return (
         <Container>
           <h1 className="text-center">ไม่มีประกาศ</h1>

@@ -17,6 +17,7 @@ import EntriesPageStf from "./pages/stf/EntriesPageStf";
 import StaffNavbar from "./components/stf/staff-navbar";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import { DataProviderStf } from "./utils/stf-context";
+import NotFoundPage from "./components/NotfoundPage";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
         </Route>
         <Route element={<LoginPage />} path="/"></Route>
         <Route element={<LoginPage />} path="/login"></Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
       </Routes>
     </Router>
   );

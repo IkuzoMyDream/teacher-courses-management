@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import useLocalState from "../utils/useLocalStorage";
-import { Button } from "react-bootstrap";
-import { Form } from "react-bootstrap";
+import { Button, Form, Container, Nav, Image, Navbar } from "react-bootstrap";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export default function LoginPage() {
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [submitEnabled, setSubmitEnabled] = useState(true);
@@ -50,36 +49,59 @@ export default function LoginPage() {
   useEffect(() => {
     if (auth?.role === "Student") {
       navigate("/student/courses");
-      // navigate(from, { replace: true });
     } else if (auth?.role === "Staff") {
       navigate("/staff/courses");
-      // navigate(from, { replace: true });
     }
   }, [auth?.role]);
 
-  return (  
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="Enter email"
-          onChange={handleUsernameChange}
-        />
-      </Form.Group>
+  return (
+    <>
+      <Navbar style={{ backgroundColor: "rgba(0, 60, 113, 0.5)" }}>
+        <Container>
+          <Navbar.Brand>
+            <Nav.Link href="https://www.psu.ac.th/" target="_blank">
+              <Image
+                src="/PSU-Logo-01.png"
+                alt="PSU Logo"
+                fluid
+                style={{ maxWidth: "100px" }}
+              />
+            </Nav.Link>
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
+      <Container className="d-flex justify-content-center align-items-center ">
+        <Form onSubmit={handleSubmit} className="border p-4 rounded">
+          <h2 className="text-center mb-4">ระบบประกาศคะแนนนักศึกษา</h2>
+          <Form.Group className="mb-3" controlId="">
+            <Form.Label>อีเมล</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              onChange={handleUsernameChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="">
+            <Form.Label>รหัสผ่าน</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={handlePasswordChange}
+            />
+          </Form.Group>
 
-      <Form.Group className="mb-3" controlId="">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Password"
-          onChange={handlePasswordChange}
-        />
-      </Form.Group>
-
-      <Button variant="primary" type="submit" disabled={!submitEnabled}>
-        Submit
-      </Button>
-    </Form>
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={!submitEnabled}
+            block
+          >
+            เข้าสู่ระบบ
+          </Button>
+        </Form>
+      </Container>
+    </>
   );
-}
+};
+
+export default LoginPage;

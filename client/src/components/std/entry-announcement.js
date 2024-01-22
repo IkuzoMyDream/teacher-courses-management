@@ -10,7 +10,7 @@ export default function EntryAnnouncement() {
   const courseName = pathname.split("/")[3];
   const announcement = myData?.courses
     .find((d) => d.name?.split(" ")[0] == courseName)
-    .announcements?.find((d) => d.id == announcementId);
+    ?.announcements?.find((d) => d.id == announcementId);
   return (
     <Form>
       <Row className="mb-3">

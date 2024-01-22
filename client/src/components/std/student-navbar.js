@@ -61,7 +61,7 @@ export default function StudentNavbar() {
               <p style={{ color: "white", margin: 0, fontSize: "small" }}>
                 (student)
               </p>
-            </Nav.Item>
+            </Nav.Item> 
             <Button onClick={handleLogout} variant="danger">
               Logout
             </Button>
