@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useDataContextStd } from "../../utils/std-context";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
-import { Chart } from "chart.js/auto";
+import { Chart, scales } from "chart.js/auto";
 import { useEffect, useState } from "react";
 import useLocalState from "../../utils/useLocalStorage";
 import { Spin } from "antd";
@@ -72,7 +72,43 @@ export default function OverallScores() {
         <Bar
           data={{
             labels: labels,
-            datasets: [{ label: "Student", data: overallScores }],
+            datasets: [{ label: "score-range", data: overallScores }],
+          }}
+          options={{
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            responsive: true,
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: "ช่วงคะแนน",
+                  font: {
+                    size: 20,
+                    weight: "bold",
+                    lineHeight: 1.2,
+                  },
+                  padding: { top: 20, left: 0, right: 0, bottom: 0 },
+                },
+              },
+              y: {
+                display: true,
+                title: {
+                  display: true,
+                  text: "จำนวนคน",
+                  font: {
+                    size: 20,
+                    style: "normal",
+                    lineHeight: 1.2,
+                  },
+                  padding: { top: 30, left: 0, right: 0, bottom: 0 },
+                },
+              },
+            },
           }}
         ></Bar>
       </Container>

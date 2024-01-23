@@ -41,6 +41,42 @@ export default function EntriesGraph({ entries }) {
             labels: labels,
             datasets: [{ label: "Student", data: bins }],
           }}
+          options={{
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            responsive: true,
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: "ช่วงคะแนน",
+                  font: {
+                    size: 20,
+                    weight: "bold",
+                    lineHeight: 1.2,
+                  },
+                  padding: { top: 20, left: 0, right: 0, bottom: 0 },
+                },
+              },
+              y: {
+                display: true,
+                title: {
+                  display: true,
+                  text: "จำนวนคน",
+                  font: {
+                    size: 20,
+                    style: "normal",
+                    lineHeight: 1.2,
+                  },
+                  padding: { top: 30, left: 0, right: 0, bottom: 0 },
+                },
+              },
+            },
+          }}
         ></Bar>
       </Container>
     );

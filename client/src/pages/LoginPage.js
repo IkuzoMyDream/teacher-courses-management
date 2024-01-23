@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import useLocalState from "../utils/useLocalStorage";
-import { Button, Form, Container, Nav, Image, Navbar } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  Container,
+  Nav,
+  Image,
+  Navbar,
+  Alert,
+} from "react-bootstrap";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,6 +17,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [submitEnabled, setSubmitEnabled] = useState(true);
   const [auth, setAuth] = useLocalState(null, "auth");
+
+  const [errMsg, setErrMsg] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,9 +50,10 @@ const LoginPage = () => {
       axios.defaults.headers.common = {
         Authorization: `Bearer ${result.data.jwt}`,
       };
-    } catch (e) {
+    } catch (err) {
+      console.log(err);
       setSubmitEnabled(true);
-      console.log(e);
+      setErrMsg(err.message);
     }
   };
 
@@ -72,6 +83,9 @@ const LoginPage = () => {
       </Navbar>
       <Container className="d-flex justify-content-center align-items-center ">
         <Form onSubmit={handleSubmit} className="border p-4 rounded">
+          {errMsg && (
+            <Alert variant="danger">อีเมลหรือรหัสผ่านไม่ถูกต้อง</Alert>
+          )}
           <h2 className="text-center mb-4">ระบบประกาศคะแนนนักศึกษา</h2>
           <Form.Group className="mb-3" controlId="">
             <Form.Label>อีเมล</Form.Label>
