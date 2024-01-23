@@ -31,14 +31,14 @@ export default function EntryList({ setIsSpin }) {
 
   if (myData) {
     const entry = myData.entries.find(
-      (entry) => entry.announcement.id == announcementId
+      (entry) => entry.announcement?.id == announcementId
     );
     console.log(entry);
     const ack = async (e) => {
       axios.defaults.baseURL =
         process.env.REACT_APP_BASE_URL || "http://localhost:1337";
       await axios
-        .put(`/api/entries/${entry.id}/ackCheck`)
+        .put(`/api/entries/${entry?.id}/ackCheck`)
         .then(window.location.reload());
     };
 
@@ -61,7 +61,7 @@ export default function EntryList({ setIsSpin }) {
               </tr>
             </thead>
             <tbody>
-              <tr key={entry.id}>
+              <tr key={entry?.id}>
                 <td style={{ fontSize: "large" }}>{entry.score}</td>
                 <td style={{ fontSize: "large" }}>
                   {entry.ack_datetime ? (
